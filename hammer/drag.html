@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <meta charset="utf-8">
+	<script src="js/hammer.js"></script>
+	<style>
+		*{padding: 0;margin: 0;}
+		#main{
+			position: fixed;
+			left: 0;
+			right: 0;
+			background: red;
+			width: 100%;
+			height: 100%;
+		}
+		#show{
+			position: absolute;
+			bottom: 10px;
+		}
+/*		#Image1{
+			position: absolute;
+			top: 30%;
+			left: 30%;
+		}*/
+	</style>
+</head>
+<body>
+	<div id="main">
+	<img id="Image1" src="../images/1.jpg" alt="">
+		
+	<div id="show">dfd</div>
+	</div>
+	<script>
+		var moveHammer = null;
+		var posX = 0;
+		var posY = 0;
+		var lastPosX = 0;
+		var lastPosY = 0;
+		var transform = {
+	        translate: { x: lastPosX, y: lastPosY },
+	        scale: 1,
+	        angle: 0,
+	        rx: 0,
+	        ry: 0,
+	        rz: 0
+	    };
+		window.onload = function() {
+			document.querySelector('#main').addEventListener('touchmove', function(evt) {
+	          if(!evt._isScroller) {
+	            evt.preventDefault();
+	          }
+	        });
+			DragImage();
+		}
+		var initScale = 1;
+		var objImage = document.querySelector('#Image1');
+		var objHammer = new Hammer(objImage);
+
+		function DragImage(){
+
+			var mc = new Hammer.Manager(objImage);
+			mc.add(new Hammer.Pan({ threshold: 0, pointers: 0 }));
+
+			mc.add(new Hammer.Swipe()).recognizeWith(mc.get('pan'));
+			mc.add(new Hammer.Rotate({ threshold: 0 })).recognizeWith(mc.get('pan'));
+			mc.add(new Hammer.Pinch({ threshold: 0 })).recognizeWith([mc.get('pan'), mc.get('rotate')]);
+
+			mc.add(new Hammer.Tap({ event: 'doubletap', taps: 2 }));
+			mc.add(new Hammer.Tap());
+			mc.add(new Hammer.Press());
+			mc.on("panstart panmove panend", onPan);
+			mc.on("rotatestart rotatemove", onRotate);
+			mc.on("pinchstart pinchmove", onPinch);
+			mc.on("swipe", onSwipe);
+			mc.on("tap", onTap);
+			mc.on("doubletap", onDoubleTap);
+			mc.on('press', onPress);
+			// objHammer.on('panstart panmove panend', onPan);
+			// objHammer.on("rotatestart rotatemove", onRotate);
+		 //    objHammer.on("pinchstart pinchmove", onPinch);
+		 //    objHammer.on("swipe", onSwipe);
+		 //    objHammer.on("tap", onTap);
+		 //    objHammer.on("doubletap", onDoubleTap);
+		}
+		function onPan(ev){
+			ev.preventDefault(); //取消事件的默认动画
+			if(ev.type == 'panend'){
+		    	console.log('djfdk');
+		    	lastPosX += ev.deltaX;
+		    	lastPosY += ev.deltaY;
+		    	return;
+		    }
+			transform.translate = {
+		        x: lastPosX + ev.deltaX,
+		        y: lastPosY + ev.deltaY
+		    };
+			updateElementTransform(objImage);
+		}
+		var initAngle = 0;
+		function onRotate(ev){
+		    if(ev.type == 'rotatestart') {
+		        initAngle = transform.angle || 0;
+		    }
+
+		    transform.rz = 1;
+		    transform.angle = initAngle + ev.rotation;
+		    updateElementTransform(objImage);
+		}
+		function onPinch(ev){
+			if(ev.type == 'pinchstart') {
+		        initScale = transform.scale || 1;
+		    }
+
+		    transform.scale = initScale * ev.scale;
+		    updateElementTransform(objImage);
+		}
+		function onSwipe(){
+			console.log('swipe');
+		}
+		function onTap(){
+			console.log('单击');
+		}
+		function onDoubleTap(){
+			console.log('双击');
+		}
+		function onPress(){
+			console.log('重压');
+		}
+		function updateElementTransform(el) {
+		    var value = [
+		        'translate3d(' + transform.translate.x + 'px, ' + transform.translate.y + 'px, 0)',
+		        'scale(' + transform.scale + ', ' + transform.scale + ')',
+		        'rotate3d('+ transform.rx +','+ transform.ry +','+ transform.rz +','+  transform.angle + 'deg)'
+		    ];
+
+		    value = value.join(" ");
+		    document.querySelector('#show').innerHTML = value;
+		    el.style.webkitTransform = value;
+		    el.style.mozTransform = value;
+		    el.style.transform = value;
+		}
+	</script>
+</body>
+</html>

@@ -10,8 +10,8 @@ function bs() {
         baseDir: "./"
       }
     });
-    // gulp.watch(['./src/precss/*.css','./src/precss/part/*.css', './src/prejs/*.js']).on('change', gulp.series(
-    //     css, js, browserSync.reload
-    //     ));
+    gulp.watch(['./*/*']).on('change', gulp.series(
+        browserSync.reload
+        ));
 }
 

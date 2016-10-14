@@ -5,7 +5,7 @@
 	<meta name="viewport" content="width=device-width" />
 	<meta charset="utf-8">
 	<style>
-		*{margin: 0}
+		*{margin: 0;}
 		.frame{
 		    width: 300px;
 		    height: 360px;
@@ -20,7 +20,7 @@
 			top: 0;
 			left: 0;
 			width: 95%;
-			transform: translate3d(5px, 5px, 0);
+			
 		}
 		#pic{
 			position: absolute;
@@ -31,12 +31,13 @@
 		#show{
 			text-align: center;
 		}
+		#show img{border: 1px solid black;}
 	</style>
 </head>
 <body>
 	<div class="frame" id="frame">
-		<img id="cover" src="../images/word.png" alt="">
-		<img id="pic" src="../images/1.jpg" alt="">
+		<img id="cover" src="../images/word.png" alt="" style="transform: translate3d(5px, 5px, 0);">
+		<img id="pic" src="../images/1.jpg" alt="" style="transform: translate3d(0px, 0px, 0);">
 	</div>
 	<button id="mergeBtn">合成图片</button>
 	<div id="show"></div>
@@ -66,20 +67,26 @@
 	        });
 			DragImage();
 			document.querySelector('#mergeBtn').onclick = function(){
-				console.log('fjkd');
 			    var canvas = document.createElement('canvas');
-			    canvas.width = $frame.offsetWidth;//CSS中定义了画布是580
-			    canvas.height = $frame.offsetHeight;
+			    canvas.width = $frame.offsetWidth-2;//CSS中定义了画布是580
+			    canvas.height = $frame.offsetHeight-2;
 
 			    var ctx = canvas.getContext('2d');
 			    ctx.fillStyle = '#FFF';//绘制背景色
 			    ctx.fillRect(0,0,canvas.width,canvas.height);
-			    var pr = 1;
+			    ctx.save();  
 			    var offsetCover = intersect($frame, $cover)
 			    var offset = intersect($frame, $pic);
-			    ctx.drawImage($pic,  offset.image.x, offset.image.y, offset.image.w, offset.image.h,offset.frame.x * pr, offset.frame.y * pr, offset.frame.w * pr, offset.frame.h * pr);
+			    //ctx.drawImage(image, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight);
+			    var rotateAngle = $pic.style.transform.split('rotate3d')[1];
+			    if(rotateAngle){
+			    	rotateAngle = rotateAngle.replace(/[^0-9\-,]/g,'').split(',')[3];
+				    ctx.rotate(20*Math.PI/180);
+			    }
+			    var scale = $pic.style.transform.split('scale')[1].split('rotate3d')[0].replace(/[^0-9\-,]/g,'').split(',');
+			    ctx.drawImage($pic,  offset.image.x, offset.image.y, offset.image.w, offset.image.h,offset.frame.x, offset.frame.y, offset.frame.w, offset.frame.h);
 			    ctx.restore();
-			    ctx.drawImage($cover,  offsetCover.image.x, offsetCover.image.y, offsetCover.image.w, offsetCover.image.h,offsetCover.frame.x * pr, offsetCover.frame.y * pr, offsetCover.frame.w * pr, offsetCover.frame.h * pr);
+			    ctx.drawImage($cover,  offsetCover.image.x, offsetCover.image.y, offsetCover.image.w, offsetCover.image.h,offsetCover.frame.x, offsetCover.frame.y, offsetCover.frame.w, offsetCover.frame.h);
 			    ctx.restore();
 			    var base64 = canvas.toDataURL('image/jpeg');
 			    //合成的图片
@@ -104,7 +111,6 @@
 		function onPan(ev){
 			ev.preventDefault(); //取消事件的默认动画
 			if(ev.type == 'panend'){
-		    	console.log('djfdk');
 		    	lastPosX += ev.deltaX;
 		    	lastPosY += ev.deltaY;
 		    	return;
@@ -152,14 +158,13 @@
 	        var frmX = 0, frmY = 0;
 	        var imgOffset, frmOffset;
 	        var left, right, top, bottom;
-	        console.log($img.style.transform)
-	        var translate = $img.style.transform.replace(/[^0-9\-,]/g,'').split(',');
-	        console.log(translate);
+	        var translateArr = $img.style.transform.split(')');
+	        var translate = translateArr[0].split('(')[1].replace(/[^0-9\-,]/g,'').split(',');
 	        imgOffset = {//图片的偏移对象
-	        	left: 0,
-	        	top: 0,
+	        	left: translate[0],
+	        	top: translate[1],
 	        	width: $img.offsetWidth,
-	        	height: $img.offsetHeight
+	        	height: $img.offsetHeight 
 	        }
 	        frmOffset = {//画框的偏移对象
 	        	left: 0,
@@ -171,7 +176,9 @@
 	        right = left + imgOffset.width;//画框模型是border-box，所以图片宽度需要减去边框的宽度 就是574
 	        top = imgOffset.top - frmOffset.top;//图片到边框上边的距离
 	        bottom = top + imgOffset.height;
-
+	        console.log('image:'+imgOffset.left+'   '+imgOffset.top+'   '+imgOffset.width+'   '+imgOffset.height);
+	        console.log('frame:'+frmOffset.left+'   '+frmOffset.top+'   '+frmOffset.width+'   '+frmOffset.height);
+	        console.log('最终位置'+left+'  '+right+'  '+top+'    '+bottom);
 	        //图片在画框内
 	        if(!(right <= 0 || left >= frmOffset.width || bottom <= 0 || top >= frmOffset.height)) {
 	            if(left < 0) {
@@ -196,12 +203,16 @@
 	            }
 	        }
 	        var ratio = getImgNaturalDimensions($img)[0] / $img.offsetWidth;//图片真实宽度 与 图片CSS宽度
-	        console.log(ratio)
+	        // console.log(ratio)
 	        //图片的实际高度不能低于计算后的高度 否则iphone 5S中就不显示
 	        var imageHeight = imgH * ratio;
 	        if(getImgNaturalDimensions($img)[1] < imageHeight) {
 	            imageHeight = getImgNaturalDimensions($img)[1];
 	        }
+	        console.log({
+	            frame: {x: frmX, y: frmY, w: (imgW), h: (imgH)},//此处画框是574，而画布是580
+	            image: {x: imgX * ratio, y: imgY * ratio, w: imgW * ratio, h: imageHeight}
+	        })
 	        return {
 	            frame: {x: frmX, y: frmY, w: (imgW), h: (imgH)},//此处画框是574，而画布是580
 	            image: {x: imgX * ratio, y: imgY * ratio, w: imgW * ratio, h: imageHeight}

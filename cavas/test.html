@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>利用canvas实现微薄图片旋转效果！</title>
+	<link rel="stylesheet" href="">
+	<style>
+	body{margin: 0;}
+	canvas{border: 1px solid black;}
+	</style>
+</head>
+<body>
+	<input type="button" value="旋转">
+	<input type="button" value="缩小">
+	<input type="button" value="放大">
+	<input type="button" value="移动">
+	<input type="button" id="mergeBtn" value="合成">
+	<div>
+		<img src="../images/1.jpg" alt="">
+	</div>
+	<div id="show"></div>
+	<script>
+	window.onload = function() {
+		document.querySelector('#mergeBtn').onclick = function(){
+			var base64 = canvas.toDataURL('image/jpeg',0.8);
+			//合成的图片
+		    document.querySelector('#show').innerHTML = '<img src="'+base64+'">'
+		}
+		var aInput = document.getElementsByTagName('input')
+		var oImg = document.getElementsByTagName("img")[0];
+
+		var img = new Image();
+		img.src = oImg.src
+		img.onload = function() {
+			draw(oImg)
+		}
+		var canvas ;
+
+		/**
+		对于图像，操作时基于中心点，因为不管什么操作，图像的中心点都不会变
+		记住图像的原始长宽
+		基于中心点，原始长宽，以及纪录下来的图像操作（位移，放大倍数，旋转角度）能清晰的计算操作后的结果
+		**/
+		function draw(obj) {
+			canvas = document.createElement('canvas');
+			canvas.width = 500;
+			canvas.height = 500;
+			var image = {
+				img:{
+					naturalWidth: obj.naturalWidth,
+					naturalHeight: obj.naturalHeight
+				},
+				centerPoint:{
+					x: obj.width/2,//图片中心点的位置X
+					y: obj.height/2//图片中心点的位置Y
+				},
+				transform: {
+	                translate: {x: 0, y: 0},
+	                rotation: 0,
+	                scale: 1
+                },
+                containerWidth: canvas.width,
+                containerHeight: canvas.height,
+                width: obj.width,
+                height: obj.height
+			}
+			var ctx = canvas.getContext('2d');
+			obj.parentNode.replaceChild(canvas, obj);
+			ctx.fillStyle = '#FFF';//绘制背景色
+			ctx.fillRect(0,0,canvas.width,canvas.height);
+			ctx.drawImage(obj, 0, 0)
+			aInput[0].onclick = function() {
+				image.transform.rotation == 3 ? image.transform.rotation = 0 : image.transform.rotation++
+				toChange();
+				//alert(image.transform.rotation)
+				
+			}		
+			aInput[1].onclick = function() {
+				image.transform.scale -= 0.1;
+				toChange();
+			}			
+			aInput[2].onclick = function() {
+				image.transform.scale += 0.1;
+				toChange();
+			}
+			aInput[3].onclick = function(){
+				image.transform.translate.x += 10;
+				image.transform.translate.y += 10;
+				image.centerPoint.x = obj.width/2+image.transform.translate.x;
+				image.centerPoint.y = obj.height/2+image.transform.translate.y;
+				toChange();
+			}
+			function toChange(){
+				var transform = image.transform;
+				ctx.save();
+				ctx.translate(image.centerPoint.x, image.centerPoint.y);
+				ctx.rotate(Math.PI * image.transform.rotation/2)
+				ctx.translate(-image.centerPoint.x, -image.centerPoint.y);
+				ctx.scale(transform.scale, transform.scale);
+				ctx.drawImage(obj,
+		            (image.centerPoint.x - image.width * transform.scale / 2) / transform.scale,
+		            (image.centerPoint.y - image.height * transform.scale / 2) / transform.scale,
+		            image.width,
+		            image.height
+		        );
+				ctx.restore();
+			}
+
+		}
+	}
+	</script>
+</body>
+</html>

@@ -12,7 +12,7 @@
 		}
 		.frame{
 		    width: 300px;
-		    height: 160px;
+		    height: 350px;
 			position: relative;
 			overflow: hidden;
 		}
@@ -63,8 +63,10 @@
           }
         });
 		var moveHammer = null;
-		var lastPosX = 0;
-		var lastPosY = 0;
+		var output = {
+			width: 500,
+			height: 700
+		}
 	    var $frame = document.querySelector('#frame');
 	    var images = [];
 	    var imagesUrl = [{
@@ -101,8 +103,8 @@
 
 			document.querySelector('#mergeBtn').onclick = function(){
 			    var canvas = document.createElement('canvas');
-			    canvas.width = $frame.offsetWidth;//CSS中定义了画布是580
-			    canvas.height = $frame.offsetHeight;
+			    canvas.width = output.width;//CSS中定义了画布是580
+			    canvas.height = output.height;
 			    var ctx = canvas.getContext('2d');
 			    ctx.fillStyle = '#FFF';//绘制背景色
 			    ctx.fillRect(0,0,canvas.width,canvas.height);
@@ -117,16 +119,22 @@
 			}
 			function drawImage(image,ctx){
 				var transform = image.transform;
+				var params = {
+					w: output.width/image.containerWidth,
+					h: output.height/image.containerHeight
+				}
 				ctx.save();
 				ctx.translate(image.centerPoint.x, image.centerPoint.y);
 				ctx.rotate(Math.PI * image.transform.rotation/180)
 				ctx.translate(-image.centerPoint.x, -image.centerPoint.y);
 				ctx.scale(transform.scale, transform.scale);
+				//根据canvas的大小进行等比放大  
+				//参数获取公式 ：Wpic/Wframe = Wout/Wcanvas ----提取params.w = Wcanvas/Wframe
 				ctx.drawImage(image.img,
-		            (image.centerPoint.x - image.width * transform.scale / 2) / transform.scale,
-		            (image.centerPoint.y - image.height * transform.scale / 2) / transform.scale,
-		            image.width,
-		            image.height
+		            (image.centerPoint.x - image.width * transform.scale / 2) / transform.scale*params.w,
+		            (image.centerPoint.y - image.height * transform.scale / 2) / transform.scale*params.h,
+		            image.width*params.w,
+		            image.height*params.h
 		        );
 				ctx.restore();
 			}

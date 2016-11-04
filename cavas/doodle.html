@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>涂鸦板</title>
+	<meta name="viewport" content="width=device-width" />
+	<meta charset="utf-8">
+	<style>	
+		canvas{
+/*			width: 300px;
+			height: 400px;*/
+			border: 1px solid black;
+		}
+	</style>
+</head>
+<body>
+    <input type="button" value="合成" onclick="mergeImage()">
+	<input type="button" value="撤销" onclick="undo()">
+	<input type="button" value="重做" onclick="redo()">
+    <div>画笔大小<input type="range" min="1" max="10.0" step="1" oninput="changeLineWidth(this.value, this.value);"></div>
+    <div id="main"></div>
+    <div id="show"></div>
+    <div id="show2"></div>
+	<script>
+	    document.body.addEventListener('touchmove', function(evt) {
+          if(!evt._isScroller) {
+            evt.preventDefault();
+          }
+        });
+		var canvas = document.createElement('canvas');
+	    canvas.width = 300;
+	    canvas.height = 360;
+	    document.querySelector('#main').appendChild(canvas);
+	    var ctx = canvas.getContext('2d');
+		ctx.fillStyle = '#fff';
+		ctx.fillRect(0,0,canvas.width, canvas.height);
+		var images = [{
+			url: '../images/4.jpeg',
+			pos:{
+	    		x:0,
+	    		y:0
+	    	},
+	    	zIndex: 0,
+	    	width:'100'
+		}];
+
+		images.forEach(function(obj){
+			addImage(obj);
+		});
+		var bMouseIsDown = false, iLastX, iLastY;
+		canvas.addEventListener('touchstart', beginDraw, false);
+		canvas.addEventListener('touchmove', drawing, false);
+		canvas.addEventListener('touchend', endDraw, false);
+		canvas.onmousedown = beginDraw;
+        canvas.onmousemove = drawing;
+        canvas.onmouseup = endDraw;
+		function beginDraw(e) {
+			ctx.save();
+			ctx.beginPath();
+            bMouseIsDown = true;
+            iLastX = e.clientX - canvas.offsetLeft + (window.pageXOffset||document.body.scrollLeft||document.documentElement.scrollLeft);
+            iLastY = e.clientY - canvas.offsetTop + (window.pageYOffset||document.body.scrollTop||document.documentElement.scrollTop);
+        }
+
+        function endDraw() {
+            bMouseIsDown = false;
+            iLastX = -1;
+            iLastY = -1;
+        }
+        
+        function drawing(e) {
+
+        	e.preventDefault();
+            if (bMouseIsDown) {
+            	var xy = pos(event);
+                var iX = xy.x+ (window.pageXOffset||document.body.scrollLeft||document.documentElement.scrollLeft);
+                var iY = xy.y + (window.pageYOffset||document.body.scrollTop||document.documentElement.scrollTop);
+                ctx.moveTo(iLastX, iLastY);
+                ctx.lineTo(iX, iY);
+                ctx.stroke();
+                iLastX = iX;
+                iLastY = iY;
+                // alert(e.clientX+'   '+canvas.offsetLeft+ '    '+(window.pageXOffset||document.body.scrollLeft||document.documentElement.scrollLeft))
+            }
+        }
+        function pos(event) {
+		    var x, y;
+			 if (isTouch(event)) {
+			    x = event.touches[0].pageX - event.target.offsetLeft;
+			    y = event.touches[0].pageY - event.target.offsetTop;
+			 } else {
+			    x = event.clientX - event.target.offsetLeft;
+			    y = event.clientY - event.target.offsetTop;
+			}   
+			return {
+			    x: x,
+			    y: y
+			};
+		}
+		function isTouch(event) {
+		    var type = event.type;
+		    //alert(type);
+		    if (type.indexOf('touch') >= 0) {
+		        return true;
+		    } else {
+		        return false;
+		    }
+		}
+		function addImage(obj){
+			var url = obj.url;
+			var x = obj.pos.x;
+			var y = obj.pos.y;
+			var img = new Image();
+			img.src = url;
+			img.onload = function(){
+				var w = canvas.width*parseInt(obj.width)/100;
+				var h = canvas.height*parseInt(obj.width)*img.height/img.width/100;
+				img.width = w;
+				img.height = h;
+				console.log(w+'   '+h)
+				ctx.drawImage(img, x, y, w, h);
+			}
+		}
+		function changeLineWidth(width){
+			ctx.lineWidth= width;
+		}
+		function mergeImage(){
+			var base64 = canvas.toDataURL('image/jpeg');
+			    //合成的图片
+			document.querySelector('#show').innerHTML = '<img src="'+base64+'">'
+			var output = {
+				width: 100,
+				height: 150
+			}
+			var sc = scaleCanvas(canvas, output.width, output.height);
+			document.querySelector('#show2').innerHTML = '<img src="'+sc.toDataURL('image/jpeg')+'">'
+		}
+	    function scaleCanvas (canvas, width, height) {
+	        var w = canvas.width,
+	            h = canvas.height;
+	        if (width == undefined) {
+	            width = w;
+	        }
+	        if (height == undefined) {
+	            height = h;
+	        }
+
+	        var retCanvas = document.createElement('canvas');
+	        var retCtx = retCanvas.getContext('2d');
+	        retCanvas.width = width;
+	        retCanvas.height = height;
+	        retCtx.drawImage(canvas, 0, 0, w, h, 0, 0, width, height);
+	        return retCanvas;
+	    }
+	    function undo(){
+	    	ctx.restore();
+	    }
+	</script>
+</body>
+</html>

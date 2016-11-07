@@ -16,6 +16,7 @@
     <input type="button" value="合成" onclick="mergeImage()">
 	<input type="button" value="撤销" onclick="undo()">
 	<input type="button" value="重做" onclick="redo()">
+	<input type="button" value="清空" onclick="clearCanvas()">
     <div>画笔大小<input type="range" min="1" max="10.0" step="1" oninput="changeLineWidth(this.value, this.value);"></div>
     <div id="main"></div>
     <div id="show"></div>
@@ -31,8 +32,13 @@
 	    canvas.height = 360;
 	    document.querySelector('#main').appendChild(canvas);
 	    var ctx = canvas.getContext('2d');
+        var preDrawAry = [];//存储当前表面状态数组-上一步
+        var nextDrawAry = [];//存储当前表面状态数组-下一步
+        var middleAry = [];//中间数组
+        var loadCount = 0;
 		ctx.fillStyle = '#fff';
 		ctx.fillRect(0,0,canvas.width, canvas.height);
+		//空绘图标进栈
 		var images = [{
 			url: '../images/4.jpeg',
 			pos:{
@@ -54,17 +60,19 @@
         canvas.onmousemove = drawing;
         canvas.onmouseup = endDraw;
 		function beginDraw(e) {
-			ctx.save();
 			ctx.beginPath();
             bMouseIsDown = true;
             iLastX = e.clientX - canvas.offsetLeft + (window.pageXOffset||document.body.scrollLeft||document.documentElement.scrollLeft);
             iLastY = e.clientY - canvas.offsetTop + (window.pageYOffset||document.body.scrollTop||document.documentElement.scrollTop);
+            preDrawAry.push(ctx.getImageData(0,0,canvas.width,canvas.height));
+
         }
 
         function endDraw() {
             bMouseIsDown = false;
             iLastX = -1;
             iLastY = -1;
+            middleAry.push(ctx.getImageData(0,0,canvas.width,canvas.height));
         }
         
         function drawing(e) {
@@ -116,8 +124,12 @@
 				var h = canvas.height*parseInt(obj.width)*img.height/img.width/100;
 				img.width = w;
 				img.height = h;
-				console.log(w+'   '+h)
+				// console.log(w+'   '+h)
 				ctx.drawImage(img, x, y, w, h);
+				loadCount++;
+				if(loadCount == images.length){
+					middleAry.push(ctx.getImageData(0, 0, canvas.width, canvas.height));
+				}
 			}
 		}
 		function changeLineWidth(width){
@@ -151,8 +163,31 @@
 	        retCtx.drawImage(canvas, 0, 0, w, h, 0, 0, width, height);
 	        return retCanvas;
 	    }
+	    //重做事件
+	    function redo(){
+	        if (nextDrawAry.length > 0) {
+	            var popData = nextDrawAry.pop();
+	            var midData = middleAry[middleAry.length - nextDrawAry.length - 2];
+	            preDrawAry.push(midData);
+	            ctx.putImageData(popData, 0, 0);
+	        }
+	    }
+	    //撤销事件
 	    function undo(){
-	    	ctx.restore();
+	    	if(preDrawAry.length > 0){
+		    	var popData = preDrawAry.pop();
+	            var midData = middleAry[preDrawAry.length + 1];
+                nextDrawAry.push(midData);
+		    	ctx.putImageData(popData, 0, 0);
+	    	}
+	    }
+	    //清空画板
+	    function clearCanvas(){
+    	    var data = middleAry[0];
+            ctx.putImageData(data, 0, 0);
+            preDrawAry = [];
+            nextDrawAry = [];
+            middleAry = [middleAry[0]];
 	    }
 	</script>
 </body>

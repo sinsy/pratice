@@ -121,7 +121,7 @@
 			img.src = url;
 			img.onload = function(){
 				var w = canvas.width*parseInt(obj.width)/100;
-				var h = canvas.height*parseInt(obj.width)*img.height/img.width/100;
+				var h = canvas.width*parseInt(obj.width)*img.height/img.width/100;
 				img.width = w;
 				img.height = h;
 				// console.log(w+'   '+h)

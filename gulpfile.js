@@ -1,7 +1,10 @@
 var assetPath = './src/';
 var gulp = require('gulp'),
   browserSync = require('browser-sync');
-
+/*js*/
+var concat = require('gulp-concat');
+var assetPath = './scripts';
+var outputPath = './output';
 gulp.task(bs);
 function bs() {
     browserSync({ 
@@ -15,3 +18,8 @@ function bs() {
         ));
 }
 
+function js(){
+  return gulp.src([output+'/*.js',output+'/*/*.js'])
+    .pipe(concat('all.js'))
+    .pipe(gulp.dest(assetPath+'/js'))
+}

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>粒子运动</title>
+	<style>
+		body{background-color: #0c1328;position: absolute;left: 0;top: 0;right: 0;bottom: 0;}
+	</style>
+</head>
+<body>
+	<canvas id="myCanvas" width="853" height="838">您的浏览器不支持Canvas</canvas>
+	<script>
+		(function() {
+			var canvas = {};
+			var image = {};
+			var particles = [];
+			canvas.obj = document.getElementById('myCanvas');
+			if(canvas.obj.getContext){
+				canvas.ctx = canvas.obj.getContext('2d');
+				canvas.w = canvas.obj.width = document.body.clientWidth;
+				canvas.h = canvas.obj.height = document.body.clientHeight;
+
+				var img = new Image();
+				img.onload = function(){
+					image.obj = img;
+					image.w = img.width;
+					image.h = img.height;
+					image.x = parseInt(canvas.w/2-image.w/2);
+					image.y = 200;
+					canvas.ctx.drawImage(image.obj, image.x, image.y, image.w, image.h);
+
+					image.imageData = canvas.ctx.getImageData(image.x, image.y, image.w, image.h);
+					calculate();
+					draw();
+				};
+				img.src = 'images/5.png'
+				// 设定每一行和每一列要显示的粒子数，分别是cols和rows，一个粒子代表一个单元格，那么每个单元格的的宽高就是imageWidth/cols和imageHeight/rows，然后循环的判断每个单元格的第一个像素是否满足像素值的条件，如果满足了，就把这个单元格的坐标保存到数组里，用作后续绘制图案用。
+				function calculate(){
+					var len = image.imageData.length;
+					//只保存100行，100列的数据
+					var cols = 100;
+					var rows = 100;
+					//设成100行，100列后每个单元的宽度和高度
+					var s_width = parseInt(image.w/cols);
+					var s_height = parseInt(image.h/rows);
+					var pos = 0;//数组中的位置
+					var par_x, par_y;//粒子的x,y
+					var data = image.imageData.data;//像素值数组
+					console.log(data);
+					//i，j从1开始
+					for(var i=0; i<cols; i++){
+						for(var j=0; j<rows; j++){
+							pos = [j*s_height*image.w + i*s_width]*4;
+							if(data[pos+3] > 100){
+								var particle = {
+									x: image.x + i*s_width + (Math.random() - 0.5)*20,
+									y: image.y + j*s_height + (Math.random() - 0.5)*20,
+								}
+								// 根据图像不同的色值来设定粒子色值
+								if(data[pos+1] < 175 && data[pos+2] < 10) {
+									particle.fillStyle = '#ffa900';
+								} else if(data[pos+1] < 75 && data[pos+1] > 50) {
+									particle.fillStyle = '#ff4085';
+								} else if(data[pos+1] < 220 && data[pos+1] > 190) {
+									particle.fillStyle = '#00cfff';
+								} else if(data[pos+1] < 195 && data[pos+1] > 175) {
+									particle.fillStyle = '#9abc1c';
+								}
+								particles.push(particle);
+								// console.log(i+'   '+j+'   '+data[pos+3])
+							}else{
+								// var particle = {
+								// 	x: image.x + i*s_width + (Math.random() - 0.5)*20,
+								// 	y: image.y + j*s_height + (Math.random() - 0.5)*20,
+								// 	fillStyle: '#000000'
+								// }
+								// particles.push(particle);
+								// console.log(i+'   '+j+'   '+data[pos+3])
+							}
+						}
+					}
+				}
+
+				function draw(){
+					canvas.ctx.clearRect(0,0,canvas.w, canvas.h);
+					var len = particles.length,
+						curr_partipcle = null;
+					for(var i=0; i<len; i++){
+						curr_partipcle = particles[i];
+						canvas.ctx.fillStyle = curr_partipcle.fillStyle;
+						canvas.ctx.fillRect(curr_partipcle.x, curr_partipcle.y, 1,1);
+					}
+				}
+			}
+		})();
+	</script>
+</body>
+</html>

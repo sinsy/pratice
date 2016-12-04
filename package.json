@@ -10,7 +10,17 @@
   "devDependencies": {
     "browser-sync": "^2.16.0",
     "gulp": "github:gulpjs/gulp#4.0"
-
   },
-  "description": ""
+  "description": "\"# pratice\"",
+  "directories": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sinsy/pratice.git"
+  },
+  "bugs": {
+    "url": "https://github.com/sinsy/pratice/issues"
+  },
+  "homepage": "https://github.com/sinsy/pratice#readme"
 }

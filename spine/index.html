@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<script src="js/spine.js"></script>
+	<script src="js/spine-canvas.js"></script>
+</head>
+<body>
+	<canvas id="objCanvas" width="640" height="580"></canvas>
+	<button onclick="setAnimation('idle')">idle</button>
+	<button onclick="setAnimation('attack')">attack</button>
+	<button onclick="changeRole()">role</button>
+	<script>
+	/* 封装ajax函数
+	 * @param {string}opt.type http连接的方式，包括POST和GET两种方式
+	 * @param {string}opt.url 发送请求的url
+	 * @param {boolean}opt.async 是否为异步请求，true为异步的，false为同步的
+	 * @param {object}opt.data 发送的参数，格式为对象类型
+	 * @param {function}opt.success ajax发送并接收成功调用的回调函数
+	 */
+    function ajax(opt) {
+        opt = opt || {};
+        opt.method = opt.method || 'GET';
+        opt.url = opt.url || '';
+        opt.async = opt.async || true;
+        opt.data = opt.data || null;
+        opt.success = opt.success || function () {};
+        var xmlHttp = null;
+        if (XMLHttpRequest) {
+            xmlHttp = new XMLHttpRequest();
+        }
+        else {
+            xmlHttp = new ActiveXObject('Microsoft.XMLHTTP');
+        }var params = [];
+        for (var key in opt.data){
+            params.push(key + '=' + opt.data[key]);
+        }
+        var postData = params.join('&');
+        if (opt.method.toUpperCase() === 'POST') {
+            xmlHttp.open(opt.method, opt.url, opt.async);
+            xmlHttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded;charset=utf-8');
+            xmlHttp.send(postData);
+        }
+        else if (opt.method.toUpperCase() === 'GET') {
+            xmlHttp.open(opt.method, opt.url + '?' + postData, opt.async);
+            xmlHttp.send(null);
+        } 
+        xmlHttp.onreadystatechange = function () {
+            if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
+                opt.success(xmlHttp.responseText);
+            }
+        };
+    }
+    var renderer = new spine.SkeletonRenderer("");
+	renderer.scale = 1;
+	renderer.load('spineboy');
+	function setAnimation(name){
+		renderer.state.addAnimationByName(0, name, true, 0);
+	}
+	var a = 1;
+	function changeRole(){
+		if(a==1){
+			renderer.load('banshan');
+			a--;
+		}else{
+			renderer.load('spineboy');
+			a++;
+		}
+
+	}
+	// renderer.state.data.defaultMix = 0.4;
+	// renderer.state.setAnimationByName(0, "attack1", true);
+	// // renderer.state.addAnimationByName(0, "jump", false, 3);
+	// // renderer.state.addAnimationByName(0, "run", true, 0);
+	// renderer.skeleton.x = 320;
+	// renderer.skeleton.y = 450;
+	// renderer.animate("canvas");
+	</script>
+</body>
+</html>

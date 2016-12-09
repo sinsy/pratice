@@ -21,12 +21,9 @@
 			* c 总位移
 			* d 持续时间
 			*/
-			Math.easeInOutExpo = function(t, b, c, d){
-				t /= d/2;
-				if(t<1) return c/2*Math.pow(2, 10*(t-1)) + b;
-				t--;
-				return c/2 * (-Math.pow(2, -10*t)+2)+b;
-			}
+			Math.easeInOutExpo = function(e, a, g, f) {
+		        return g * (-Math.pow(2, -10 * e / f) + 1) + a
+		    }
 			canvas.obj = document.getElementById('myCanvas');
 			if(canvas.obj.getContext){
 				canvas.ctx = canvas.obj.getContext('2d');
@@ -69,15 +66,15 @@
 							if(data[pos+3] > 100){//判断透明区域
 								var particle = {
 									x0: canvas.w/2,
-									y0: 700,
+									y0: 500,
 									x1: image.x + i*s_width + (Math.random() - 0.5)*20,
 									y1: image.y + j*s_height + (Math.random() - 0.5)*20,
 			                        fillStyle: '#ffffff',
 			                        delay: 10 / 20,
 			                        currTime: 0,
 			                        count: 0,
-			                        duration: parseInt(3000 / 16.66) + 1,
-			                        interval: parseInt(Math.random() * 10 * 0.001)
+			                        duration: parseInt(2000 / 16.66) + 1,
+			                        interval: parseInt(Math.random() * 10 * 100)
 								}
 								// 根据图像不同的色值来设定粒子色值
 								if(data[pos+1] < 175 && data[pos+2] < 10) {
@@ -121,39 +118,45 @@
 			        }
 				}
 				function draw(){
-					canvas.ctx.clearRect(0,0,canvas.w, canvas.h);
-					var len = particles.length,
-						cur_partipcle = null;
-					var cur_x, cur_y;
-					var cur_time = 0,
-						duration = 0,
-						cur_delay = 0;
-					var time = new Date().getTime();
-					for(var i=0; i<len; i++){
-						cur_partipcle = particles[i];
-						if(cur_partipcle.count++ > cur_partipcle.delay){
-							canvas.ctx.fillStyle = cur_partipcle.fillStyle;
-							cur_time = cur_partipcle.currTime;
-							duration = cur_partipcle.duration;
-							cur_delay = cur_partipcle.interval;
-							if(particles[len-1].duration < particles[len-1].currTime){
-								drawLast();
-								cancelAnimationFrame(requestId);
-								// calculate();
-								// requestId = requestAnimationFrame(draw);
-								return;
-							}else if(cur_time < duration){
-								cur_x = Math.easeInOutExpo(cur_time, cur_partipcle.x0, cur_partipcle.x1-cur_partipcle.x0,duration);
-								cur_y = Math.easeInOutExpo(cur_time, cur_partipcle.y0, cur_partipcle.y1-cur_partipcle.y0,duration);
-								canvas.ctx.fillRect(cur_x, cur_y, 1,1);
-								cur_partipcle.currTime += Math.random() + 0.5;
-								// cur_partipcle.currTime ++;
-							}else{
-								canvas.ctx.fillRect(cur_partipcle.x1, cur_partipcle.y1,1,1);
-							}
-						}
-					}
-					requestId = requestAnimationFrame(draw);
+			        canvas.ctx.clearRect(0, 0, canvas.w, canvas.h);
+			        var l = particles;
+			        var f = l.length;
+			        var h = null;
+			        var d, a;
+			        var k = 0,
+			            b = 0,
+			            c = 0,
+			            j = 1,
+			            g = 1;
+			        for (var e = 0; e < f; e++) {
+			            h = l[e];
+			            if (h.count++ > h.delay) {
+			                canvas.ctx.fillStyle = h.fillStyle;
+			                k = h.currTime;
+			                b = h.duration;
+			                c = h.interval;
+			                h.ratioX !== 1 ? j = h.ratioX + Math.random() * 2 : 1;
+			                h.ratioY !== 1 ? g = h.ratioY + Math.random() * 2 : 1;
+			                h.ratioY=h.ratioX=1;
+			                if (l[f - 1].duration + l[f - 1].interval < l[f - 1].currTime / 2) {
+			                    cancelAnimationFrame(requestId);
+			                    drawLast();
+			                    return
+			                } else {
+			                    if (k < b + c) {
+			                        if (k >= c) {
+			                            d = Math.easeInOutExpo((k - c) * j, h.x0, (h.x1 - h.x0) * j, b);
+			                            a = Math.easeInOutExpo((k - c) * g, h.y0, (h.y1 - h.y0) * g, b);
+			                            canvas.ctx.fillRect(d, a, 1, 1)
+			                        }
+			                    } else {
+			                        canvas.ctx.fillRect(h.x1, h.y1, 1, 1)
+			                    }
+			                h.currTime += Math.random() + 0.5
+			                }
+			            }
+			        }
+			        requestId = requestAnimationFrame(draw)
 				}
 			}
 		})();

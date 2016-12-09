@@ -1,0 +1,139 @@
+
+mojin.png
+size: 512,128
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+body-1
+  rotate: false
+  xy: 310, 63
+  size: 55, 59
+  orig: 55, 59
+  offset: 0, 0
+  index: -1
+body-2
+  rotate: false
+  xy: 2, 27
+  size: 70, 95
+  orig: 70, 95
+  offset: 0, 0
+  index: -1
+body-3
+  rotate: false
+  xy: 154, 70
+  size: 81, 52
+  orig: 81, 52
+  offset: 0, 0
+  index: -1
+head
+  rotate: false
+  xy: 74, 39
+  size: 78, 83
+  orig: 78, 83
+  offset: 0, 0
+  index: -1
+left-arm-1
+  rotate: false
+  xy: 410, 43
+  size: 30, 37
+  orig: 30, 37
+  offset: 0, 0
+  index: -1
+left-arm-2
+  rotate: false
+  xy: 34, 2
+  size: 25, 23
+  orig: 25, 23
+  offset: 0, 0
+  index: -1
+left-arm-3
+  rotate: false
+  xy: 218, 53
+  size: 17, 15
+  orig: 17, 15
+  offset: 0, 0
+  index: -1
+left-arm-4
+  rotate: false
+  xy: 237, 66
+  size: 71, 56
+  orig: 71, 56
+  offset: 0, 0
+  index: -1
+left-leg-1
+  rotate: false
+  xy: 454, 92
+  size: 36, 30
+  orig: 36, 30
+  offset: 0, 0
+  index: -1
+left-leg-2
+  rotate: false
+  xy: 469, 65
+  size: 20, 25
+  orig: 20, 25
+  offset: 0, 0
+  index: -1
+left-leg-3
+  rotate: false
+  xy: 260, 52
+  size: 20, 12
+  orig: 20, 12
+  offset: 0, 0
+  index: -1
+right-arm-1
+  rotate: false
+  xy: 410, 82
+  size: 42, 40
+  orig: 42, 40
+  offset: 0, 0
+  index: -1
+right-arm-2
+  rotate: false
+  xy: 187, 38
+  size: 29, 30
+  orig: 29, 30
+  offset: 0, 0
+  index: -1
+right-arm-3
+  rotate: false
+  xy: 2, 2
+  size: 30, 23
+  orig: 30, 23
+  offset: 0, 0
+  index: -1
+right-arm-4
+  rotate: false
+  xy: 492, 103
+  size: 16, 19
+  orig: 16, 19
+  offset: 0, 0
+  index: -1
+right-arm-5
+  rotate: false
+  xy: 367, 36
+  size: 41, 86
+  orig: 41, 86
+  offset: 0, 0
+  index: -1
+right-leg-1
+  rotate: false
+  xy: 154, 36
+  size: 31, 32
+  orig: 31, 32
+  offset: 0, 0
+  index: -1
+right-leg-2
+  rotate: false
+  xy: 442, 54
+  size: 25, 26
+  orig: 25, 26
+  offset: 0, 0
+  index: -1
+right-leg-3
+  rotate: false
+  xy: 237, 52
+  size: 21, 12
+  orig: 21, 12
+  offset: 0, 0
+  index: -1

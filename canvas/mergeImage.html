@@ -45,8 +45,8 @@
 	<div class="center">
 		<div class="frameOuter">
 			<div class="frame" id="frame">
-				<!-- <img id="cover" src="../images/word.png" alt="" style="transform: translate3d(5px, 5px, 0);"> -->
-				<!-- <img id="pic" src="../images/1.jpg" alt="" style="transform: translate3d(0px, 0px, 0);"> -->
+				<!-- <img id="cover" src="images/word.png" alt="" style="transform: translate3d(5px, 5px, 0);"> -->
+				<!-- <img id="pic" src="images/1.jpg" alt="" style="transform: translate3d(0px, 0px, 0);"> -->
 			</div>		
 		</div>
 	</div>
@@ -54,7 +54,7 @@
 	旋转图片<input type="range" min="-180" max="180" id="rotateControl" oninput="rotateImage(this.value);"></br>
 	缩放<input class="flex-2" type="range" id="scaleControl" min="0.1" max="2.0" step="0.05" oninput="scaleImage(this.value, this.value);">
 	<div id="show"></div>
-	<script src="../hammer/js/hammer.js"></script>
+	<script src="js/hammer.js"></script>
 	<!-- <script src="http://demo.jackyang.me/image-editor/public/scripts/hammer.min.js"></script> -->
 	<script>
 	    document.body.addEventListener('touchmove', function(evt) {
@@ -68,7 +68,7 @@
 	    var $frame = document.querySelector('#frame');
 	    var images = [];
 	    var imagesUrl = [{
-	    	url:'../images/word.png',
+	    	url:'images/word.png',
 	    	pos:{
 	    		x:5,
 	    		y:5
@@ -76,7 +76,7 @@
 	    	zIndex: 1,
 	    	width: '95',
 	    },{
-	    	url:'../images/1.jpg',
+	    	url:'images/1.jpg',
 	    	pos:{
 	    		x:0,
 	    		y:0

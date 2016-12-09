@@ -1,0 +1,27 @@
+
+test.png
+size: 64,256
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+one
+  rotate: false
+  xy: 2, 104
+  size: 20, 100
+  orig: 20, 100
+  offset: 0, 0
+  index: -1
+three
+  rotate: false
+  xy: 2, 2
+  size: 20, 100
+  orig: 20, 100
+  offset: 0, 0
+  index: -1
+two
+  rotate: false
+  xy: 24, 104
+  size: 20, 100
+  orig: 20, 100
+  offset: 0, 0
+  index: -1

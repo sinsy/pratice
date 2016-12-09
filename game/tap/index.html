@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<meta name="author" content="caoping" />
+		<meta name="copyright" content="Copyright (c) 2015 All Rights Reserved." />
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<link rel="shortcut icon" href="/storage/image/64x64.png" />  
+		<link rel="Bookmark" href="/storage/image/64x64.png" /> 
+		<link rel="apple-touch-icon" sizes="57x57" href="img/touch-icon-iphone-57.png" />  
+		<link rel="apple-touch-icon" sizes="72x72" href="img/touch-icon-ipad-72.png" />  
+		<link rel="apple-touch-icon" sizes="114x114" href="img/touch-icon-iphone4-114.png" />    
+		<link rel="apple-touch-icon" sizes="144x144" href="img/apple-touch-icon-ipad3-144.png" /> 
+		<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
+		<meta name="viewport" content="width=device-width">
+		<meta name="description" content="">
+		<meta name="keywords" content="">
+		<title>点击盗墓-灼华</title>
+					
+		<style>
+			html,
+				body {
+					width: 100%;
+					height: 100%;
+					padding: 0;
+					margin: 0;
+					touch-action: manipulation;-moz-user-select:none;-webkit-user-select:none;
+				}
+				body {
+					background: rgba(63, 63, 63, 1); overflow: hidden;
+				}	
+				.weixin_icon{display: none;}	
+				#theBox{ position:relative;width:1px;height:100%;margin:0 auto;}
+				#theBox canvas{ position:absolute;top:0;height:100%;}
+				p.cmdList{position: absolute;top:0;right:0;margin:0;}
+				p.cmdList span{  display: block;
+				  width: 24px;
+				  line-height: 24px;
+				  text-align: center;
+				  color:#E20F0F ;
+				  cursor: pointer;  text-shadow: 1px 1px 3px #933D3D;
+				  }
+				p.cmdList span:hover{background: #E20F0F;color:#fff;}
+				.box{border-top: 4px solid #866841; position:absolute;top:30%; background: rgba(255,255,255,1);color:#fff;z-index:100;}
+				.box span.red{color:#f00;font-size:1.2em;}
+				.box,.box p.title{font-size:16px;color:#fff;font-weight: bold; text-align: center;}
+				.box p{}
+				.button{margin: 0 5px;
+				  color: #555;
+				  font-size: 14px;
+				  text-decoration: none;
+				  text-align: center;
+				  display:inline-block;
+				  padding: 5px 10px;
+				  border: 1px solid #BDB5B5;
+				  border-radius: 3px;}
+				.button:hover{border:none;background: #fff;color:#555; box-shadow: 2px 2px 4px #000;}
+				#menuButton{width:25%;position: absolute;height:5%;top:0;right:0;background: #fff;z-index:100;}
+				#menu,#messageBox{top:-1720px;}
+				#messageBox{height:100%;  background: rgba(0,0,0,.6);}
+				.box img{}
+				#debug{  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 30%;
+  background: rgba(0,0,0,.6);
+  color: green;
+  overflow: auto;
+  margin: 0;
+  padding: 0;
+  z-index: 999; display:none;}
+				#debug li{  margin: .5em;
+  border-top: 1px solid #555;
+  width: 100%;
+  word-wrap: break-word;
+  word-break: normal;}
+  .bg{ position: absolute;height:100%;top:0;width:0; background-repeat: no-repeat;background-size:auto 100%;  background-position:right top;}
+  .bgLeft{ }
+  .bgRight{}
+  .canvasBg{position: absolute;
+  top: 0;
+  left: 0;
+ 
+background-size: auto 100%;
+background-repeat: no-repeat;
+background-position: center top;}
+canvas{ position: absolute;top:0;}
+img.share{width:100%; display: block;}
+
+
+ #mask{ position:absolute;width:100%;height:100%;z-index:20;background-color: rgba(0,0,0,.8); display:none;}
+#weixinImg{  position: absolute;
+    bottom: 0;
+    text-align: center;
+    width: 100%;
+    color: #fff;
+    z-index: 110;display:none;}
+#weixinImg .red{color:#ff0000;}
+        </style>
+	</head>
+
+	<body ontouchmove="event.preventDefault()" onselectstart="return false;">
+		<div class="weixin_icon"><img src="img/weixin_300.jpg"  /></div>	
+        <div id="mask">
+
+        </div>
+        <div id="weixinImg">
+            <img src="/storage/image/gameQrcode.png" alt="盗墓OL公众号二维码">
+        </div>
+		<script src="js/ZGCore.js"></script>
+		<script src="js/zhGame.js"></script>
+        <script src="/themes/mob/js/weixin.js"></script>
+		<script src="js/main.js"></script>
+	<div class="cnzz">
+        <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1255677208'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s4.cnzz.com/z_stat.php%3Fid%3D1255677208' type='text/javascript'%3E%3C/script%3E"));</script>
+    <style>
+        .cnzz{display: none;}
+    </style>
+    </div>
+    </body>
+
+</html>

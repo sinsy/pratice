@@ -1,0 +1,97 @@
+
+luwang.png
+size: 512,512
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+body-1
+  rotate: false
+  xy: 2, 4
+  size: 176, 205
+  orig: 176, 205
+  offset: 0, 0
+  index: -1
+body-2
+  rotate: false
+  xy: 363, 360
+  size: 136, 115
+  orig: 136, 115
+  offset: 0, 0
+  index: -1
+body-3
+  rotate: false
+  xy: 2, 211
+  size: 246, 264
+  orig: 246, 264
+  offset: 0, 0
+  index: -1
+head
+  rotate: false
+  xy: 250, 307
+  size: 111, 168
+  orig: 111, 168
+  offset: 0, 0
+  index: -1
+left-arm-1
+  rotate: false
+  xy: 377, 135
+  size: 91, 115
+  orig: 91, 115
+  offset: 0, 0
+  index: -1
+left-arm-2
+  rotate: false
+  xy: 273, 35
+  size: 72, 82
+  orig: 72, 82
+  offset: 0, 0
+  index: -1
+left-arm-3
+  rotate: false
+  xy: 250, 199
+  size: 125, 106
+  orig: 125, 106
+  offset: 0, 0
+  index: -1
+left-arm-4
+  rotate: false
+  xy: 273, 119
+  size: 88, 78
+  orig: 88, 78
+  offset: 0, 0
+  index: -1
+phiz-1
+  rotate: false
+  xy: 421, 85
+  size: 44, 48
+  orig: 44, 48
+  offset: 0, 0
+  index: -1
+right-arm-1
+  rotate: false
+  xy: 180, 82
+  size: 91, 115
+  orig: 91, 115
+  offset: 0, 0
+  index: -1
+right-arm-2
+  rotate: false
+  xy: 347, 35
+  size: 72, 82
+  orig: 72, 82
+  offset: 0, 0
+  index: -1
+right-arm-3
+  rotate: false
+  xy: 377, 252
+  size: 125, 106
+  orig: 125, 106
+  offset: 0, 0
+  index: -1
+right-arm-4
+  rotate: false
+  xy: 180, 2
+  size: 88, 78
+  orig: 88, 78
+  offset: 0, 0
+  index: -1

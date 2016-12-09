@@ -1,0 +1,90 @@
+
+xufu.png
+size: 512,512
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+body-1
+  rotate: false
+  xy: 2, 2
+  size: 166, 154
+  orig: 166, 154
+  offset: 0, 0
+  index: -1
+body-2
+  rotate: false
+  xy: 360, 363
+  size: 90, 30
+  orig: 90, 30
+  offset: 0, 0
+  index: -1
+body-3
+  rotate: false
+  xy: 206, 345
+  size: 152, 160
+  orig: 152, 160
+  offset: 0, 0
+  index: -1
+body-4
+  rotate: false
+  xy: 2, 158
+  size: 202, 347
+  orig: 202, 347
+  offset: 0, 0
+  index: -1
+body-5
+  rotate: false
+  xy: 170, 18
+  size: 48, 138
+  orig: 48, 138
+  offset: 0, 0
+  index: -1
+body-6
+  rotate: false
+  xy: 453, 367
+  size: 48, 138
+  orig: 48, 138
+  offset: 0, 0
+  index: -1
+head
+  rotate: false
+  xy: 316, 88
+  size: 42, 117
+  orig: 42, 117
+  offset: 0, 0
+  index: -1
+left-arm-1
+  rotate: false
+  xy: 220, 105
+  size: 94, 96
+  orig: 94, 96
+  offset: 0, 0
+  index: -1
+left-arm-2
+  rotate: false
+  xy: 220, 64
+  size: 49, 39
+  orig: 49, 39
+  offset: 0, 0
+  index: -1
+phiz-1
+  rotate: false
+  xy: 360, 395
+  size: 91, 110
+  orig: 91, 110
+  offset: 0, 0
+  index: -1
+phiz-2
+  rotate: false
+  xy: 300, 207
+  size: 65, 136
+  orig: 65, 136
+  offset: 0, 0
+  index: -1
+right-arm-1
+  rotate: false
+  xy: 206, 203
+  size: 92, 140
+  orig: 92, 140
+  offset: 0, 0
+  index: -1

@@ -1,0 +1,90 @@
+
+dufeng.png
+size: 512,256
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+body-1
+  rotate: false
+  xy: 2, 18
+  size: 112, 209
+  orig: 112, 209
+  offset: 0, 0
+  index: -1
+head
+  rotate: false
+  xy: 206, 47
+  size: 66, 54
+  orig: 66, 54
+  offset: 0, 0
+  index: -1
+head-1
+  rotate: false
+  xy: 116, 2
+  size: 24, 45
+  orig: 24, 45
+  offset: 0, 0
+  index: -1
+head-2
+  rotate: false
+  xy: 142, 2
+  size: 24, 45
+  orig: 24, 45
+  offset: 0, 0
+  index: -1
+left-leg-1
+  rotate: false
+  xy: 397, 145
+  size: 50, 82
+  orig: 50, 82
+  offset: 0, 0
+  index: -1
+left-leg-2
+  rotate: false
+  xy: 274, 6
+  size: 30, 95
+  orig: 30, 95
+  offset: 0, 0
+  index: -1
+phiz-1
+  rotate: false
+  xy: 328, 132
+  size: 67, 95
+  orig: 67, 95
+  offset: 0, 0
+  index: -1
+phiz-2
+  rotate: false
+  xy: 116, 49
+  size: 88, 52
+  orig: 88, 52
+  offset: 0, 0
+  index: -1
+right-leg-1
+  rotate: false
+  xy: 449, 145
+  size: 50, 82
+  orig: 50, 82
+  offset: 0, 0
+  index: -1
+right-leg-2
+  rotate: false
+  xy: 306, 6
+  size: 30, 95
+  orig: 30, 95
+  offset: 0, 0
+  index: -1
+wing-1
+  rotate: false
+  xy: 116, 103
+  size: 104, 124
+  orig: 104, 124
+  offset: 0, 0
+  index: -1
+wing-2
+  rotate: false
+  xy: 222, 103
+  size: 104, 124
+  orig: 104, 124
+  offset: 0, 0
+  index: -1

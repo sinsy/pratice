@@ -1,0 +1,83 @@
+
+mojinhuoban.png
+size: 256,128
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+body-1
+  rotate: false
+  xy: 84, 73
+  size: 50, 47
+  orig: 50, 47
+  offset: 0, 0
+  index: -1
+body-2
+  rotate: false
+  xy: 194, 102
+  size: 35, 18
+  orig: 35, 18
+  offset: 0, 0
+  index: -1
+head
+  rotate: false
+  xy: 2, 34
+  size: 80, 86
+  orig: 80, 86
+  offset: 0, 0
+  index: -1
+left-arm-1
+  rotate: false
+  xy: 231, 102
+  size: 20, 18
+  orig: 20, 18
+  offset: 0, 0
+  index: -1
+left-arm-2
+  rotate: false
+  xy: 194, 85
+  size: 24, 15
+  orig: 24, 15
+  offset: 0, 0
+  index: -1
+left-arm-3
+  rotate: false
+  xy: 136, 59
+  size: 30, 61
+  orig: 30, 61
+  offset: 0, 0
+  index: -1
+left-leg-1
+  rotate: false
+  xy: 168, 85
+  size: 24, 35
+  orig: 24, 35
+  offset: 0, 0
+  index: -1
+right-arm-1
+  rotate: false
+  xy: 191, 62
+  size: 20, 21
+  orig: 20, 21
+  offset: 0, 0
+  index: -1
+right-arm-2
+  rotate: false
+  xy: 168, 57
+  size: 21, 26
+  orig: 21, 26
+  offset: 0, 0
+  index: -1
+right-arm-3
+  rotate: false
+  xy: 2, 2
+  size: 60, 30
+  orig: 60, 30
+  offset: 0, 0
+  index: -1
+right-leg-1
+  rotate: false
+  xy: 84, 36
+  size: 37, 35
+  orig: 37, 35
+  offset: 0, 0
+  index: -1

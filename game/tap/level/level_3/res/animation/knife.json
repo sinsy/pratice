@@ -1,0 +1,36 @@
+{"frames": {
+
+"0.png":
+{
+	"frame": {"x":2,"y":2,"w":320,"h":399},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":320,"h":399},
+	"sourceSize": {"w":320,"h":399}
+},
+"1.png":
+{
+	"frame": {"x":324,"y":2,"w":160,"h":251},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":160,"h":251},
+	"sourceSize": {"w":160,"h":251}
+},
+"2.png":
+{
+	"frame": {"x":2,"y":403,"w":320,"h":199},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":320,"h":199},
+	"sourceSize": {"w":320,"h":199}
+}},
+"meta": {
+	"app": "http://www.texturepacker.com",
+	"version": "1.0",
+	"image": "knife.png",
+	"format": "RGBA8888",
+	"size": {"w":512,"h":1024},
+	"scale": "1",
+	"smartupdate": ""
+}
+}

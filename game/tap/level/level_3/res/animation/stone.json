@@ -1,0 +1,20 @@
+{"frames": {
+
+"stone.png":
+{
+	"frame": {"x":2,"y":2,"w":48,"h":37},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":1,"y":1,"w":48,"h":37},
+	"sourceSize": {"w":50,"h":39}
+}},
+"meta": {
+	"app": "http://www.texturepacker.com",
+	"version": "1.0",
+	"image": "stone.png",
+	"format": "RGBA8888",
+	"size": {"w":64,"h":64},
+	"scale": "1",
+	"smartupdate": ""
+}
+}

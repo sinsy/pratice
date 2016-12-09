@@ -1,0 +1,17 @@
+[
+  {"type":"group"
+  ,"x":"0"
+  ,"y":"60%height"
+  ,"width":"100%width"
+  ,"height":"30"
+  ,"child":[
+    {"type":"static"
+    ,"index":"startNew"
+    ,"offsetX":"50%width"
+    ,"offsetY":"120"
+    ,"width":"150"
+    ,"height":"60"
+    ,"frames":"newgame"}
+  ]
+  }
+]

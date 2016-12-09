@@ -1,0 +1,97 @@
+
+wangnima.png
+size: 256,128
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+body-1
+  rotate: false
+  xy: 2, 2
+  size: 39, 33
+  orig: 39, 33
+  offset: 0, 0
+  index: -1
+body-2
+  rotate: false
+  xy: 105, 95
+  size: 36, 29
+  orig: 36, 29
+  offset: 0, 0
+  index: -1
+body-3
+  rotate: false
+  xy: 143, 103
+  size: 20, 21
+  orig: 20, 21
+  offset: 0, 0
+  index: -1
+hair
+  rotate: false
+  xy: 43, 10
+  size: 33, 25
+  orig: 33, 25
+  offset: 0, 0
+  index: -1
+head
+  rotate: false
+  xy: 2, 37
+  size: 101, 87
+  orig: 101, 87
+  offset: 0, 0
+  index: -1
+left-arm-1
+  rotate: false
+  xy: 123, 53
+  size: 16, 15
+  orig: 16, 15
+  offset: 0, 0
+  index: -1
+left-arm-2
+  rotate: false
+  xy: 78, 10
+  size: 16, 25
+  orig: 16, 25
+  offset: 0, 0
+  index: -1
+left-leg-1
+  rotate: false
+  xy: 165, 105
+  size: 18, 19
+  orig: 18, 19
+  offset: 0, 0
+  index: -1
+left-leg-2
+  rotate: false
+  xy: 202, 117
+  size: 18, 7
+  orig: 18, 7
+  offset: 0, 0
+  index: -1
+right-arm-1
+  rotate: false
+  xy: 185, 109
+  size: 15, 15
+  orig: 15, 15
+  offset: 0, 0
+  index: -1
+right-arm-2
+  rotate: false
+  xy: 105, 44
+  size: 16, 24
+  orig: 16, 24
+  offset: 0, 0
+  index: -1
+right-leg-1
+  rotate: false
+  xy: 105, 70
+  size: 34, 23
+  orig: 34, 23
+  offset: 0, 0
+  index: -1
+right-leg-2
+  rotate: false
+  xy: 43, 2
+  size: 19, 6
+  orig: 19, 6
+  offset: 0, 0
+  index: -1

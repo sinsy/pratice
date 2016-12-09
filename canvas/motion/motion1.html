@@ -68,13 +68,13 @@
 								particles.push(particle);
 								// console.log(i+'   '+j+'   '+data[pos+3])
 							}else{
-								// var particle = {
-								// 	x: image.x + i*s_width + (Math.random() - 0.5)*20,
-								// 	y: image.y + j*s_height + (Math.random() - 0.5)*20,
-								// 	fillStyle: '#000000'
-								// }
-								// particles.push(particle);
-								// console.log(i+'   '+j+'   '+data[pos+3])
+								var particle = {
+									x: image.x + i*s_width + (Math.random() - 0.5)*20,
+									y: image.y + j*s_height + (Math.random() - 0.5)*20,
+									fillStyle: '#000000'
+								}
+								particles.push(particle);
+								console.log(i+'   '+j+'   '+data[pos+3])
 							}
 						}
 					}

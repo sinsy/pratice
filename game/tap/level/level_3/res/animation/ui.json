@@ -1,0 +1,124 @@
+{"frames": {
+
+"buddy.png":
+{
+	"frame": {"x":937,"y":357,"w":80,"h":94},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":11,"y":6,"w":80,"h":94},
+	"sourceSize": {"w":100,"h":100}
+},
+"dare.png":
+{
+	"frame": {"x":908,"y":215,"w":100,"h":48},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":2,"w":100,"h":48},
+	"sourceSize": {"w":100,"h":50}
+},
+"endImg.png":
+{
+	"frame": {"x":2,"y":2,"w":750,"h":1344},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":10,"w":750,"h":1344},
+	"sourceSize": {"w":750,"h":1354}
+},
+"gold.png":
+{
+	"frame": {"x":848,"y":357,"w":87,"h":37},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":87,"h":37},
+	"sourceSize": {"w":87,"h":37}
+},
+"keep.png":
+{
+	"frame": {"x":754,"y":118,"w":196,"h":56},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":4,"y":4,"w":196,"h":56},
+	"sourceSize": {"w":200,"h":60}
+},
+"lock.png":
+{
+	"frame": {"x":754,"y":234,"w":96,"h":72},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":10,"w":96,"h":72},
+	"sourceSize": {"w":100,"h":100}
+},
+"menu.png":
+{
+	"frame": {"x":908,"y":176,"w":113,"h":37},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":113,"h":37},
+	"sourceSize": {"w":113,"h":37}
+},
+"newgame.png":
+{
+	"frame": {"x":754,"y":176,"w":152,"h":56},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":4,"y":4,"w":152,"h":56},
+	"sourceSize": {"w":200,"h":60}
+},
+"noLimit.png":
+{
+	"frame": {"x":754,"y":62,"w":198,"h":54},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":2,"y":6,"w":198,"h":54},
+	"sourceSize": {"w":200,"h":60}
+},
+"skill1.png":
+{
+	"frame": {"x":852,"y":265,"w":92,"h":90},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":4,"y":1,"w":92,"h":90},
+	"sourceSize": {"w":100,"h":100}
+},
+"skill2.png":
+{
+	"frame": {"x":946,"y":265,"w":72,"h":86},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":19,"y":11,"w":72,"h":86},
+	"sourceSize": {"w":100,"h":100}
+},
+"skill3.png":
+{
+	"frame": {"x":754,"y":308,"w":92,"h":56},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":2,"y":25,"w":92,"h":56},
+	"sourceSize": {"w":100,"h":100}
+},
+"skill4.png":
+{
+	"frame": {"x":754,"y":366,"w":80,"h":88},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":13,"y":11,"w":80,"h":88},
+	"sourceSize": {"w":100,"h":100}
+},
+"weixinLogin.png":
+{
+	"frame": {"x":754,"y":2,"w":226,"h":58},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":2,"w":226,"h":58},
+	"sourceSize": {"w":240,"h":60}
+}},
+"meta": {
+	"app": "http://www.texturepacker.com",
+	"version": "1.0",
+	"image": "ui.png",
+	"format": "RGBA8888",
+	"size": {"w":1024,"h":2048},
+	"scale": "1",
+	"smartupdate": ""
+}
+}

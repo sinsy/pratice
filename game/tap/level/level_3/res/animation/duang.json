@@ -1,0 +1,20 @@
+{"frames": {
+
+"duang.png":
+{
+	"frame": {"x":2,"y":2,"w":452,"h":138},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":19,"y":10,"w":452,"h":138},
+	"sourceSize": {"w":480,"h":148}
+}},
+"meta": {
+	"app": "http://www.texturepacker.com",
+	"version": "1.0",
+    "image": "capsule.png",
+	"format": "RGBA8888",
+	"size": {"w":512,"h":256},
+	"scale": "1",
+	"smartupdate": ""
+}
+}

@@ -1,0 +1,118 @@
+
+wulianhou.png
+size: 1024,256
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+body-1
+  rotate: false
+  xy: 2, 56
+  size: 170, 187
+  orig: 170, 187
+  offset: 0, 0
+  index: -1
+body-2
+  rotate: false
+  xy: 174, 129
+  size: 230, 114
+  orig: 230, 114
+  offset: 0, 0
+  index: -1
+body-3
+  rotate: false
+  xy: 406, 134
+  size: 152, 109
+  orig: 152, 109
+  offset: 0, 0
+  index: -1
+head
+  rotate: false
+  xy: 340, 22
+  size: 78, 105
+  orig: 78, 105
+  offset: 0, 0
+  index: -1
+left-arm-1
+  rotate: false
+  xy: 774, 136
+  size: 100, 107
+  orig: 100, 107
+  offset: 0, 0
+  index: -1
+left-arm-2
+  rotate: false
+  xy: 174, 45
+  size: 81, 82
+  orig: 81, 82
+  offset: 0, 0
+  index: -1
+left-arm-3
+  rotate: false
+  xy: 560, 105
+  size: 105, 138
+  orig: 105, 138
+  offset: 0, 0
+  index: -1
+left-leg-1
+  rotate: false
+  xy: 420, 57
+  size: 62, 75
+  orig: 62, 75
+  offset: 0, 0
+  index: -1
+left-leg-2
+  rotate: false
+  xy: 67, 19
+  size: 49, 35
+  orig: 49, 35
+  offset: 0, 0
+  index: -1
+phiz-1
+  rotate: false
+  xy: 2, 2
+  size: 63, 52
+  orig: 63, 52
+  offset: 0, 0
+  index: -1
+phiz-2
+  rotate: false
+  xy: 484, 65
+  size: 70, 67
+  orig: 70, 67
+  offset: 0, 0
+  index: -1
+right-arm-1
+  rotate: false
+  xy: 876, 136
+  size: 100, 107
+  orig: 100, 107
+  offset: 0, 0
+  index: -1
+right-arm-2
+  rotate: false
+  xy: 257, 45
+  size: 81, 82
+  orig: 81, 82
+  offset: 0, 0
+  index: -1
+right-arm-3
+  rotate: false
+  xy: 667, 105
+  size: 105, 138
+  orig: 105, 138
+  offset: 0, 0
+  index: -1
+right-leg-1
+  rotate: false
+  xy: 556, 28
+  size: 62, 75
+  orig: 62, 75
+  offset: 0, 0
+  index: -1
+right-leg-2
+  rotate: false
+  xy: 620, 68
+  size: 49, 35
+  orig: 49, 35
+  offset: 0, 0
+  index: -1

@@ -1,0 +1,68 @@
+{"frames": {
+
+"0.png":
+{
+	"frame": {"x":174,"y":244,"w":59,"h":68},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":23,"y":12,"w":59,"h":68},
+	"sourceSize": {"w":105,"h":98}
+},
+"1.png":
+{
+	"frame": {"x":2,"y":2,"w":105,"h":96},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":2,"w":105,"h":96},
+	"sourceSize": {"w":105,"h":98}
+},
+"2.png":
+{
+	"frame": {"x":89,"y":182,"w":83,"h":86},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":11,"y":1,"w":83,"h":86},
+	"sourceSize": {"w":105,"h":98}
+},
+"3.png":
+{
+	"frame": {"x":2,"y":100,"w":85,"h":86},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":10,"y":2,"w":85,"h":86},
+	"sourceSize": {"w":105,"h":98}
+},
+"4.png":
+{
+	"frame": {"x":109,"y":2,"w":89,"h":90},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":8,"y":0,"w":89,"h":90},
+	"sourceSize": {"w":105,"h":98}
+},
+"5.png":
+{
+	"frame": {"x":109,"y":94,"w":85,"h":86},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":9,"y":0,"w":85,"h":86},
+	"sourceSize": {"w":105,"h":98}
+},
+"6.png":
+{
+	"frame": {"x":174,"y":182,"w":63,"h":60},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":18,"y":11,"w":63,"h":60},
+	"sourceSize": {"w":105,"h":98}
+}},
+"meta": {
+	"app": "http://www.texturepacker.com",
+	"version": "1.0",
+	"image": "explosion1.png",
+	"format": "RGBA8888",
+	"size": {"w":256,"h":512},
+	"scale": "1",
+	"smartupdate": ""
+}
+}

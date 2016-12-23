@@ -6,6 +6,7 @@
 	<script src="js/spine-canvas.js"></script>
 </head>
 <body>
+	<img src="http://g.tbcdn.cn/tm/spokesman//0.0.4/img/head/18.jpg" alt="" style="display: none">
 	<canvas id="objCanvas" width="640" height="580"></canvas>
 	<button onclick="setAnimation('idle')">idle</button>
 	<button onclick="setAnimation('attack')">attack</button>
@@ -51,9 +52,51 @@
             }
         };
     }
-    var renderer = new spine.SkeletonRenderer("");
-	renderer.scale = 1;
-	renderer.load('spineboy');
+    var ImgRes = [{url:'http://g.tbcdn.cn/tm/spokesman//0.0.4/img/head/18.jpg'}];
+    var _imgRes = [];
+    for(var i=0,len=ImgRes.length; i<len; i++){
+		_imgRes.push(LoadImage(ImgRes[i]));
+    }
+    updateCanvas();
+    function LoadImage(p){
+        var image = new Image();
+        for(var i in p){
+            image[i] = p[i];
+        }
+        image.status = 'loading';
+        image.crossOrigin = 'Anonymous';
+        image.onload = function () {
+            image.status = 'ok';
+        };
+        image.onerror = function () {
+            image.status = 'err';
+            console.log('图片加载错误! %s,url[ %s ]', p.name, p.url);
+        };
+        image.src = p.url;
+        return image;
+    }
+    function updateCanvas(){
+        var max = 0;
+        var n = 0;
+        var p;
+        for(var i in _imgRes){
+            p = _imgRes[i];
+            if('status' in p){
+                max++;
+                if (p.status.indexOf('ok') != -1 || p.status.indexOf('err') != -1)n++;
+            }
+        }
+        r = n / max;
+        if (r < 1) {
+            setTimeout(updateCanvas, 50);
+        }else{
+            initCanvas();
+        } 
+    }
+    function initCanvas(){
+	    var renderer = new spine.SkeletonRenderer("");
+		renderer.load('spineboy');    	
+    }
 	function setAnimation(name){
 		renderer.state.addAnimationByName(0, name, true, 0);
 	}
@@ -68,6 +111,7 @@
 		}
 
 	}
+
 	// renderer.state.data.defaultMix = 0.4;
 	// renderer.state.setAnimationByName(0, "attack1", true);
 	// // renderer.state.addAnimationByName(0, "jump", false, 3);

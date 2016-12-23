@@ -46,13 +46,14 @@ spine.SkeletonRenderer.prototype = {
 	},
 
 	initAtlas:function(obj){
-		var _url='data/'+obj+'.atlas';
+		var _url='../data/'+obj+'.atlas';
 		var _self=this;
 		ajax({url:_url,success:function(data){
 			textureLoader=function(){
 				this.load=function(page,line,obj){
 					page.el=new Image();
-					page.el.src='data/'+line;
+					page.el.src='../data/'+line;
+					console.log(page.el.src)
 				};
 				this.unload=function(){				
 					console.log('load');
@@ -69,7 +70,7 @@ spine.SkeletonRenderer.prototype = {
 	},
 	initObj:function(obj){
 		var _self=this;
-		_url='data/'+obj+'.json';	
+		_url='../data/'+obj+'.json';	
 		ajax({url:_url,success:function(data){
 			_self.skeletonData = _self.json.readSkeletonData(JSON.parse(data));
 			spine.Bone.yDown = true;				
@@ -81,15 +82,15 @@ spine.SkeletonRenderer.prototype = {
 				console.log('end');
 			}
 			// renderer.scale = .3;
-			renderer.state.timeScale=1;
-			renderer.state.data.defaultMix = .4;
-			renderer.state.data.setMix('idle','idle');
-			renderer.state.setAnimationByName(0, "idle", true);
+			_self.state.timeScale=1;
+			_self.state.data.defaultMix = .4;
+			_self.state.data.setMix('idle','idle');
+			_self.state.setAnimationByName(0, "idle", true);
 			// renderer.state.addAnimationByName(0, "jump", false, 3);
 			// renderer.state.addAnimationByName(0, "run", true, 0);
-			renderer.skeleton.x = 220;
-			renderer.skeleton.y = 300;
-			renderer.animate("objCanvas");
+			_self.skeleton.x = 200;
+			_self.skeleton.y = 300;
+			_self.animate("objCanvas");
 		}});
 	},
 	update: function() {
@@ -111,7 +112,6 @@ spine.SkeletonRenderer.prototype = {
 			var attachment = slot.attachment;
 			if (!(attachment instanceof spine.RegionAttachment)) continue;
 			var bone = slot.bone;
-
 			var x = bone.worldX + attachment.x * bone.m00 + attachment.y * bone.m01;
 			var y = bone.worldY + attachment.x * bone.m10 + attachment.y * bone.m11;
 			var rotation = -(bone.worldRotation + attachment.rotation) * Math.PI / 180;
@@ -120,13 +120,13 @@ spine.SkeletonRenderer.prototype = {
 			context.translate(x, y);
 			context.rotate(rotation);
 			context.scale(bone.worldScaleY,bone.worldScaleX);
-			// if(attachment.name=='three' || attachment.name=='9'){
-			// 	console.log('bone.worldRotation=%s,%s.r=%s',bone.worldRotation,attachment.name,attachment.rotation);		
-			// 	var a=0;
-			// }		
 			var _elWidth=attachment.regionWidth;
 			var _elHeight=attachment.regionHeight;
-			context.drawImage(attachment.rendererObject.page.el,attachment.rendererObject.x,attachment.rendererObject.y,_elWidth,_elHeight,-attachment.width/2,-attachment.height/2,attachment.width,attachment.height);		
+			if(attachment.name == 'head'){
+				context.drawImage(attachment.image,-attachment.width/2,-attachment.height/2,attachment.width,attachment.height);		
+			}else{
+				context.drawImage(attachment.rendererObject.page.el,attachment.rendererObject.x,attachment.rendererObject.y,_elWidth,_elHeight,-attachment.width/2,-attachment.height/2,attachment.width,attachment.height);		
+			}
 			context.restore();
 		}
 		context.translate(-skeleton.x, -skeleton.y);

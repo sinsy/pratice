@@ -166,8 +166,8 @@ Particles.prototype = {
                     } else {
                         canvas.ctx.fillRect(h.x1, h.y1, 1, 1)
                     }
-                }
                 h.currTime += Math.random() + 0.5
+                }
             }
         }
         requestId = requestAnimationFrame(Particles.prototype._render)

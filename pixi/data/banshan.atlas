@@ -1,0 +1,139 @@
+
+banshan.png
+size: 512,128
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+body-1
+  rotate: false
+  xy: 275, 90
+  size: 30, 32
+  orig: 30, 32
+  offset: 0, 0
+  index: -1
+body-2
+  rotate: false
+  xy: 2, 3
+  size: 32, 24
+  orig: 32, 24
+  offset: 0, 0
+  index: -1
+body-3
+  rotate: false
+  xy: 231, 62
+  size: 42, 60
+  orig: 42, 60
+  offset: 0, 0
+  index: -1
+body-4
+  rotate: false
+  xy: 307, 83
+  size: 17, 39
+  orig: 17, 39
+  offset: 0, 0
+  index: -1
+body-5
+  rotate: false
+  xy: 2, 29
+  size: 101, 93
+  orig: 101, 93
+  offset: 0, 0
+  index: -1
+hair
+  rotate: false
+  xy: 172, 48
+  size: 57, 74
+  orig: 57, 74
+  offset: 0, 0
+  index: -1
+head
+  rotate: false
+  xy: 105, 49
+  size: 65, 73
+  orig: 65, 73
+  offset: 0, 0
+  index: -1
+left-arm-1
+  rotate: false
+  xy: 36, 3
+  size: 21, 24
+  orig: 21, 24
+  offset: 0, 0
+  index: -1
+left-arm-2
+  rotate: false
+  xy: 275, 63
+  size: 21, 25
+  orig: 21, 25
+  offset: 0, 0
+  index: -1
+left-arm-3
+  rotate: false
+  xy: 105, 34
+  size: 14, 13
+  orig: 14, 13
+  offset: 0, 0
+  index: -1
+left-leg-1
+  rotate: false
+  xy: 59, 3
+  size: 18, 24
+  orig: 18, 24
+  offset: 0, 0
+  index: -1
+left-leg-2
+  rotate: false
+  xy: 79, 2
+  size: 15, 25
+  orig: 15, 25
+  offset: 0, 0
+  index: -1
+left-leg-3
+  rotate: false
+  xy: 121, 34
+  size: 12, 13
+  orig: 12, 13
+  offset: 0, 0
+  index: -1
+right-arm-1
+  rotate: false
+  xy: 365, 102
+  size: 19, 20
+  orig: 19, 20
+  offset: 0, 0
+  index: -1
+right-arm-2
+  rotate: false
+  xy: 345, 99
+  size: 18, 23
+  orig: 18, 23
+  offset: 0, 0
+  index: -1
+right-arm-3
+  rotate: false
+  xy: 231, 48
+  size: 12, 12
+  orig: 12, 12
+  offset: 0, 0
+  index: -1
+right-leg-1
+  rotate: false
+  xy: 326, 94
+  size: 17, 28
+  orig: 17, 28
+  offset: 0, 0
+  index: -1
+right-leg-2
+  rotate: false
+  xy: 386, 101
+  size: 13, 21
+  orig: 13, 21
+  offset: 0, 0
+  index: -1
+right-leg-3
+  rotate: false
+  xy: 401, 109
+  size: 13, 13
+  orig: 13, 13
+  offset: 0, 0
+  index: -1

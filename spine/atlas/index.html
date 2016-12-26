@@ -94,8 +94,10 @@
         } 
     }
     function initCanvas(){
-	    var renderer = new spine.SkeletonRenderer("");
-		renderer.load('spineboy');    	
+        var renderer12 = new spine.SkeletonRenderer("");
+		renderer12.load('banshan');    	
+        var renderer2 = new spine.SkeletonRenderer("");
+        renderer2.load('spineboy');      
     }
 	function setAnimation(name){
 		renderer.state.addAnimationByName(0, name, true, 0);

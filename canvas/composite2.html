@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<body>
+<img src="images/1.jpg" style="display: none;">
+<img src="images/5.png"  style="display: none;">
+<canvas id="myCanvas" width="500" height="500" style="border:1px solid #d3d3d3;">
+Your browser does not support the HTML5 canvas tag.
+</canvas>
+
+<script>
+
+var c=document.getElementById("myCanvas");
+var ctx=c.getContext("2d");
+var img2 = new Image();
+img2.onload = function(){
+	ctx.drawImage(img2, 334,0,334,392, 0,0,334,392);
+	var img1 = new Image();
+	img1.onload = function() {
+		ctx.globalCompositeOperation = 'source-atop';
+		ctx.drawImage(img1, 20,250,350,350);
+		ctx.drawImage(img2, 668,0,334,392, 0,0,334,392);
+	}
+	img1.src = 'images/1.jpg';
+}
+img2.src = 'images/man1_head.png'
+
+
+
+</script>
+
+</body>
+</html>

@@ -2442,7 +2442,7 @@ spine.AtlasReader.prototype = {
 
 spine.AtlasAttachmentLoader = function (atlas) {
 	this.atlas = atlas;
-	console.log(this)
+	// console.log(this)
 };
 spine.AtlasAttachmentLoader.prototype = {
 	newRegionAttachment: function (skin, name, path) {
@@ -2457,12 +2457,6 @@ spine.AtlasAttachmentLoader.prototype = {
 		attachment.regionHeight = region.height;
 		attachment.regionOriginalWidth = region.originalWidth;
 		attachment.regionOriginalHeight = region.originalHeight;
-		if(name=='face'){//替换头部
-			var image = new Image();
-			image.src = '2.png';
-			attachment.image = image;
-			// console.log(attachment)
-		}
 		return attachment;
 	},
 	newMeshAttachment: function (skin, name, path) {

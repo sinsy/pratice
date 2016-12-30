@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<script src="rolebg/spine.js"></script>
+    <script src="rolebg/spine-canvas.js"></script>
+    <script src="rolebg/rolebg.js"></script>
+	<script src="rolebg/action.js"></script>
+</head>
+<body>
+	<img src="http://g.tbcdn.cn/tm/spokesman//0.0.4/img/head/18.jpg" alt="" style="display: none">
+	<canvas id="objCanvas" width="640" height="680"></canvas>
+	<script>
+    var BoneCanvas = (function() {
+        function init(){
+            Res.init();
+            update();
+        }
+        function update(){
+            var list = Res.list;
+            var max = Res.list.length-1;
+            var n = 0;
+            var p;
+            for(var i in list){
+                p = list[i];
+                if('status' in p){
+                    n++;
+                }
+            }
+            r = n / max;
+            if (r < 1) {
+                setTimeout(update, 50);
+            }else{
+                // setTimeout(initCanvas, 1000)
+                initCanvas();
+            }             
+        }
+        function initCanvas(){
+            var canvas = document.getElementById('objCanvas');
+            var context = canvas.getContext("2d");
+            var requestAnimationFrame = window.requestAnimationFrame ||
+            window.webkitRequestAnimationFrame ||
+            window.mozRequestAnimationFrame ||            
+            function (callback) {
+                window.setTimeout(callback, 1000 / 60);
+            };
+            for(var key in ZhSpine.infoList){
+                var data = {'name':'man0'
+                    ,'infoName': key
+                    ,action:'animation'
+                    ,scale:.5
+                    ,active:true,
+                    x:300,
+                    y:300,
+                    part: {}
+                }
+                for(var i in Res.list){
+                    var p = Res.list[i];
+                    if('role' in p){
+                        if(p.role == data.name){
+                            data.part[p.part]=i;
+                        }
+                    }
+                }
+                var _id = ZhSpine.make(data);
+                ZhSpine.list[_id];
+                if(key == 'skeleton'){
+                    var data = {'name':'man2'
+                        ,'infoName': key
+                        ,action:'animation'
+                        ,scale:.3
+                        ,active:true,
+                        x:400,
+                        y:300,
+                        part: {}
+                    }
+                    for(var i in Res.list){
+                        var p = Res.list[i];
+                        if('role' in p){
+                            if(p.role == data.name){
+                                data.part[p.part]=i;
+                            }
+                        }
+                    }
+                    var _id2 = ZhSpine.make(data);
+                    ZhSpine.list[_id2];
+                }
+            }
+            renderFrame();
+            function renderFrame(){
+                context.clearRect(0, 0, canvas.width, canvas.height);
+                for(var i in ZhSpine.list){
+                    ZhSpine.list[i].update();
+                    ZhSpine.list[i].render(context, Res);
+                }
+                requestAnimationFrame(renderFrame);
+            }
+        }
+        return {
+            init: init
+        }
+
+    })();
+    
+    BoneCanvas.init();
+
+	</script>
+</body>
+</html>

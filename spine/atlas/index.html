@@ -7,7 +7,7 @@
 </head>
 <body>
 	<img src="http://g.tbcdn.cn/tm/spokesman//0.0.4/img/head/18.jpg" alt="" style="display: none">
-	<canvas id="objCanvas" width="640" height="580"></canvas>
+	<canvas id="objCanvas" width="640" height="680"></canvas>
 	<button onclick="setAnimation('idle')">idle</button>
 	<button onclick="setAnimation('attack')">attack</button>
 	<button onclick="changeRole()">role</button>
@@ -57,6 +57,7 @@
     for(var i=0,len=ImgRes.length; i<len; i++){
 		_imgRes.push(LoadImage(ImgRes[i]));
     }
+    // initCanvas()
     updateCanvas();
     function LoadImage(p){
         var image = new Image();
@@ -90,14 +91,68 @@
         if (r < 1) {
             setTimeout(updateCanvas, 50);
         }else{
+
             initCanvas();
         } 
     }
+    var spineArr = [];
+    var roleArr = [{name:'skeleton',x:300, y:500,callback:callback}, {name:'skeleton',x:600, y:300,callback:callback}]   
+    function callback(obj){
+        spineArr.push(obj);       
+    }
     function initCanvas(){
-        var renderer12 = new spine.SkeletonRenderer("");
-		renderer12.load('banshan');    	
-        var renderer2 = new spine.SkeletonRenderer("");
-        renderer2.load('spineboy');      
+
+        for(var i in roleArr){
+            var renderer = new spine.SkeletonRenderer("");
+            renderer.scale = .5; 
+            renderer.load(roleArr[i]);  
+            // setTimeout(function(){
+            //     renderer.scale = 1;    
+            //     renderer.skeleton.x = 300;
+            //     renderer.skeleton.y =400;
+            // },3000)
+        }
+        setTimeout(function(){test()}, 200)
+        // renderer1 = new spine.SkeletonRenderer("");
+        // renderer1.scale = .9;    
+        // renderer1.load({name:'banshan',x:300, y:600});  
+
+    }
+    function test(){
+        var max = 0;
+        var n = 0;
+        var p;
+        for(var i in spineArr){
+            p = spineArr[i];
+            if('status' in p){
+                max++;
+                if (p.status.indexOf('ok') != -1 || p.status.indexOf('err') != -1)n++;
+            }
+        }
+        r = n / max;
+        if (r < 1) {
+            setTimeout(test, 50);
+        }else{
+            var canvas = document.getElementById('objCanvas');
+            var context = canvas.getContext("2d");
+            var requestAnimationFrame = window.requestAnimationFrame ||
+            window.webkitRequestAnimationFrame ||
+            window.mozRequestAnimationFrame ||
+            function (callback) {
+                window.setTimeout(callback, 1000 / 60);
+            };
+            function renderFrame () {
+                context.clearRect(0, 0, canvas.width, canvas.height);
+                for(var i in spineArr){
+                    spineArr[i].update();
+                    spineArr[i].render(context);
+                }
+                requestAnimationFrame(renderFrame);
+            };
+            renderFrame();
+
+            // initCanvas();
+        } 
     }
 	function setAnimation(name){
 		renderer.state.addAnimationByName(0, name, true, 0);

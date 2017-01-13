@@ -41,22 +41,12 @@ var Res = (function() {
     var list = new Array();
     var eList = new Array();
 
-    function init() {
-        loadList();
+    function init(arr) {
+        loadList(arr);
     }
 
-    function loadList() {
-        var _inList = [ {
-            "url": "1.png",
-            'role': 'man0',
-            part: 'face'
-        }, {
-            "url": "2.png",
-            'role': 'man2',
-            part: 'face'
-        },
-        {'url':'skeleton.spine', "z":"100"},
-        {'url': 'skeleton.spine'}];
+    function loadList(arr) {
+        var _inList = arr;
         for (i in _inList) {
             list.push(_inList[i]);
         }

@@ -17,16 +17,18 @@
         }
         function update(){
             var list = Res.list;
-            var max = Res.list.length-1;
+            var max = Res.list.length;
             var n = 0;
             var p;
             for(var i in list){
                 p = list[i];
+                // console.log(p.status);
                 if('status' in p){
                     n++;
                 }
             }
             r = n / max;
+
             if (r < 1) {
                 setTimeout(update, 50);
             }else{
@@ -43,48 +45,62 @@
             function (callback) {
                 window.setTimeout(callback, 1000 / 60);
             };
-            for(var key in ZhSpine.infoList){
-                var data = {'name':'man0'
-                    ,'infoName': key
+            var roleData = [{name:'man0'
+                    ,infoName: 'skeleton'
                     ,action:'animation'
                     ,scale:.5
                     ,active:true,
                     x:300,
                     y:300,
                     part: {}
-                }
-                for(var i in Res.list){
-                    var p = Res.list[i];
+                }, {name:'man1'
+                    ,infoName: 'skeleton'
+                    ,action:'animation'
+                    ,scale:.3
+                    ,active:true,
+                    x:400,
+                    y:300,
+                    part: {}
+                },{name:'man2'
+                    ,infoName: 'skeleton'
+                    ,action:'animation'
+                    ,scale:.3
+                    ,active:true,
+                    x:100,
+                    y:300,
+                    part: {}
+                }]
+            for(var i in roleData){
+       			var data = roleData[i];
+            	for(var j in Res.list){
+                    var p = Res.list[j];
                     if('role' in p){
                         if(p.role == data.name){
-                            data.part[p.part]=i;
+                            data.part[p.part]=j;
                         }
                     }
                 }
                 var _id = ZhSpine.make(data);
                 ZhSpine.list[_id];
-                if(key == 'skeleton'){
-                    var data = {'name':'man2'
-                        ,'infoName': key
-                        ,action:'animation'
-                        ,scale:.3
-                        ,active:true,
-                        x:400,
-                        y:300,
-                        part: {}
-                    }
-                    for(var i in Res.list){
-                        var p = Res.list[i];
-                        if('role' in p){
-                            if(p.role == data.name){
-                                data.part[p.part]=i;
-                            }
-                        }
-                    }
-                    var _id2 = ZhSpine.make(data);
-                    ZhSpine.list[_id2];
-                }
             }
+            // for(var key in ZhSpine.infoList){
+
+            //     var _id = ZhSpine.make(data);
+            //     ZhSpine.list[_id];
+            //     if(key == 'skeleton'){
+            //         var data =
+            //         for(var i in Res.list){
+            //             var p = Res.list[i];
+            //             if('role' in p){
+            //                 if(p.role == data.name){
+            //                     data.part[p.part]=i;
+            //                 }
+            //             }
+            //         }
+            //         var _id2 = ZhSpine.make(data);
+            //         ZhSpine.list[_id2];
+            //     }
+            // }
             renderFrame();
             function renderFrame(){
                 context.clearRect(0, 0, canvas.width, canvas.height);
@@ -110,8 +126,7 @@
             'role': 'man2',
             part: 'face'
         },
-        {'url':'skeleton.spine', "z":"100"},
-        {'url': 'skeleton.spine'}]);
+        {'url':'skeleton.spine', "z":"100"},{'url':'skeleton.spine', "z":"100"}]);
 
 	</script>
 </body>

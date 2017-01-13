@@ -24,8 +24,13 @@ var ZhSpine = (function() {
             Res.eList.push(this);
             _info.eId = Res.eList.length - 1;
             loadJsonText(_info);
-            Res.list[i].status = 'complete';
-            Res.load(i + 1);
+            var time = setInterval(function(){
+                if(_info.atlasText!=''&&_info.spineJsonText!=''){
+                    Res.list[i].status = 'complete';
+                    Res.load(i + 1);
+                    clearInterval(time);
+                }
+            },30);
         }
         _element.src = _info.path + _info.name + '.png';
     }
@@ -56,12 +61,15 @@ var ZhSpine = (function() {
         var _x = typeof(arguments[0]['x']) != 'undefined' ? arguments[0]['x'] : -1000;
         var _y = typeof(arguments[0]['y']) != 'undefined' ? arguments[0]['y'] : -1000;
         var part = typeof(arguments[0]['part']) != 'undefined' ? arguments[0]['part'] : false;
-        var _spine = new ZhSpine.spineRole({name:name
+        var alpha = typeof(arguments[0]['alpha']) != 'undefined' ? arguments[0]['alpha'] : -1;
+        var data = {name:name
         ,infoName:name
         ,action:_action
         ,scale:_scale
         ,active:_active,x:_x,y:_y,
-        part:part}).init(infoList[arguments[0]['infoName']]);
+        part:part,
+        alpha:alpha};
+        var _spine = new ZhSpine.spineRole(data).init(infoList[arguments[0]['infoName']]);
         _spine.move(_x, _y);
         var _n1 = Math.random() * 100 | 0;
         var _n2 = Math.random() * 100 | 0;
@@ -93,7 +101,6 @@ var spineRole = function() {
     for (var key in arguments[0]) {
         this[key] = arguments[0][key];
     }
- console.log(this)
     return this;
 }
 spineRole.prototype = {
@@ -138,7 +145,6 @@ spineRole.prototype = {
             //_this.setToSetupPose();
             //}
         }
-        console.log(this)
         var _action = this.action=='' ? 'idle' : this.action;
         this.state.setAnimationByName(0, _action, true);
         return this;
@@ -162,6 +168,9 @@ spineRole.prototype = {
 
     render: function(context, res) {
         if (!this.active) return;
+        if(this.alpha != -1){
+            context.globalAlpha = this.alpha;
+        }
         context.save();
         var skeleton = this.skeleton,
             drawOrder = skeleton.drawOrder;

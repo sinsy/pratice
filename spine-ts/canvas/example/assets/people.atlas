@@ -1,0 +1,167 @@
+
+people.png
+size: 1024,1024
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+A01
+  rotate: false
+  xy: 658, 22
+  size: 99, 128
+  orig: 99, 128
+  offset: 0, 0
+  index: -1
+A02
+  rotate: false
+  xy: 904, 366
+  size: 99, 127
+  orig: 99, 127
+  offset: 0, 0
+  index: -1
+Body
+  rotate: false
+  xy: 558, 633
+  size: 300, 360
+  orig: 300, 360
+  offset: 0, 0
+  index: -1
+Body2
+  rotate: false
+  xy: 289, 179
+  size: 244, 112
+  orig: 244, 112
+  offset: 0, 0
+  index: -1
+Foot_L_01
+  rotate: false
+  xy: 860, 647
+  size: 131, 123
+  orig: 131, 123
+  offset: 0, 0
+  index: -1
+Foot_L_02
+  rotate: false
+  xy: 839, 243
+  size: 121, 121
+  orig: 121, 121
+  offset: 0, 0
+  index: -1
+Foot_L_03
+  rotate: false
+  xy: 860, 772
+  size: 137, 221
+  orig: 137, 221
+  offset: 0, 0
+  index: -1
+Foot_L_04
+  rotate: false
+  xy: 2, 14
+  size: 146, 277
+  orig: 146, 277
+  offset: 0, 0
+  index: -1
+Foot_R_01
+  rotate: false
+  xy: 706, 281
+  size: 131, 123
+  orig: 131, 123
+  offset: 0, 0
+  index: -1
+Foot_R_02
+  rotate: false
+  xy: 558, 175
+  size: 121, 121
+  orig: 121, 121
+  offset: 0, 0
+  index: -1
+Foot_R_03
+  rotate: false
+  xy: 150, 70
+  size: 137, 221
+  orig: 137, 221
+  offset: 0, 0
+  index: -1
+Foot_R_04
+  rotate: false
+  xy: 558, 354
+  size: 146, 277
+  orig: 146, 277
+  offset: 0, 0
+  index: -1
+HandNew01
+  rotate: false
+  xy: 289, 43
+  size: 164, 134
+  orig: 164, 134
+  offset: 0, 0
+  index: -1
+HandNew02
+  rotate: false
+  xy: 289, 43
+  size: 164, 134
+  orig: 164, 134
+  offset: 0, 0
+  index: -1
+Hand_L_01
+  rotate: false
+  xy: 904, 495
+  size: 100, 150
+  orig: 100, 150
+  offset: 0, 0
+  index: -1
+Hand_L_02
+  rotate: false
+  xy: 706, 406
+  size: 97, 225
+  orig: 97, 225
+  offset: 0, 0
+  index: -1
+Hand_L_03
+  rotate: false
+  xy: 557, 45
+  size: 99, 128
+  orig: 99, 128
+  offset: 0, 0
+  index: -1
+Hand_R_01
+  rotate: false
+  xy: 455, 27
+  size: 100, 150
+  orig: 100, 150
+  offset: 0, 0
+  index: -1
+Hand_R_02
+  rotate: false
+  xy: 805, 406
+  size: 97, 225
+  orig: 97, 225
+  offset: 0, 0
+  index: -1
+Hand_R_03
+  rotate: false
+  xy: 681, 152
+  size: 99, 127
+  orig: 99, 127
+  offset: 0, 0
+  index: -1
+Head
+  rotate: false
+  xy: 2, 293
+  size: 554, 700
+  orig: 554, 700
+  offset: 0, 0
+  index: -1
+Neck
+  rotate: false
+  xy: 150, 2
+  size: 105, 66
+  orig: 105, 66
+  offset: 0, 0
+  index: -1
+Patch
+  rotate: false
+  xy: 558, 298
+  size: 145, 54
+  orig: 145, 54
+  offset: 0, 0
+  index: -1

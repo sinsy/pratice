@@ -82,7 +82,7 @@ spine.SkeletonRenderer.prototype = {
 				console.log('end');
 			}
 
-			_self.state.timeScale=1;
+			_self.state.timeScale=.6;
 			_self.state.data.defaultMix = .4;
 			_self.state.data.setMix('idle','idle');
 			_self.state.setAnimationByName(0, "animation", true);

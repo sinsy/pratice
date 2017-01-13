@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <script src="rolebg/spine.js"></script>
+    <script src="rolebg/rolebg.js"></script>
+    <script src="rolebg/action.js"></script>
+</head>
+<body>
+    <img src="http://g.tbcdn.cn/tm/spokesman//0.0.4/img/head/18.jpg" alt="" style="display: none">
+    <canvas id="objCanvas" width="640" height="680"></canvas>
+    <script>
+    var BoneCanvas = (function() {
+        function init(arr){
+            Res.init(arr);
+            update();
+        }
+        function update(){
+            var list = Res.list;
+            var max = Res.list.length;
+            var n = 0;
+            var p;
+            for(var i in list){
+                p = list[i];
+                // console.log(p.status);
+                if('status' in p){
+                    n++;
+                }
+            }
+            r = n / max;
+
+            if (r < 1) {
+                setTimeout(update, 50);
+            }else{
+                // setTimeout(initCanvas, 1000)
+                initCanvas();
+            }             
+        }
+        function initCanvas(){
+            var canvas = document.getElementById('objCanvas');
+            var context = canvas.getContext("2d");
+            var requestAnimationFrame = window.requestAnimationFrame ||
+            window.webkitRequestAnimationFrame ||
+            window.mozRequestAnimationFrame ||            
+            function (callback) {
+                window.setTimeout(callback, 1000 / 60);
+            };
+		    var actionArr = ['HappyNewYear', 'ApplePen'];
+            var roleData = [{name:'man2'
+                    ,infoName: 'people'
+                    ,action:actionArr[0]
+                    ,scale:.2
+                    ,active:true,
+                    alpha: .8,
+                    x:300,
+                    y:500,
+                    part: {}
+                },{name:'man0'
+                    ,infoName: 'people'
+                    ,action:actionArr[0]
+                    ,scale:.2
+                    ,active:true,
+                    alpha: .4,
+                    x:500,
+                    y:500,
+                    part: {}
+                },{name:'man2'
+                    ,infoName: 'banshan'
+                    ,action:'idle'
+                    ,scale:1
+                    ,active:true,
+                    x:100,
+                    y:500,
+                    part: {}
+                }]
+            for(var i in roleData){
+                var data = roleData[i];
+                for(var j in Res.list){
+                    var p = Res.list[j];
+                    if('role' in p){
+                        if(p.role == data.name){
+                            data.part[p.part]=j;
+                        }
+                    }
+                }
+                var _id = ZhSpine.make(data);
+                ZhSpine.list[_id];
+            }
+
+            renderFrame();
+		    canvas.addEventListener('click', changeAnimation, false);
+		    var count = 0;
+		    function changeAnimation(e){
+		       count++;
+		       if(count >= actionArr.length){
+		       	count = 0;
+		       }
+		        for(var key in ZhSpine.list){
+	                ZhSpine.list[key].action = actionArr[count];
+	                ZhSpine.list[key].state.setAnimationByName(0, ZhSpine.list[key].action, true, 0);                    
+	                ZhSpine.list[key].startTime=Date.now();
+			        ZhSpine.list[key].endTime=ZhSpine.list[key].startTime+2000;
+		        }
+		    }
+    
+	        function renderFrame(){
+                context.clearRect(0, 0, canvas.width, canvas.height);
+                for(var i in ZhSpine.list){
+                    var _list = ZhSpine.list[i];
+                    _list.state.timeScale = 1;
+                    var d=Date.now();
+		            var p=(d-_list.startTime)/500;
+		            p=p>1?1:p;
+		            _list.alpha=p;
+                    _list.update();
+                    _list.render(context, Res);
+
+                    var data = {
+                        width:_list.skeletonData.width*_list.scale,
+                        height:_list.skeletonData.height*_list.scale
+                    }
+                    data.x = _list.skeleton.x-data.width/2;
+                    data.y = _list.skeleton.y-data.height;
+                }
+                requestAnimationFrame(renderFrame);
+            }
+        }
+        return {
+            init: init
+        }
+
+    })();
+    
+    BoneCanvas.init([ {
+            "url": "1.png",
+            'role': 'man0',
+            part: 'face'
+        }, {
+            "url": "2.png",
+            'role': 'man2',
+            part: 'face'
+        },
+        {'url':'people.spine', "z":"100"},{'url':'banshan.spine'}]);
+    
+    </script>
+</body>
+</html>

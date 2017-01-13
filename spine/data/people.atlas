@@ -1,0 +1,209 @@
+
+people.png
+size: 2048,2048
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+A01
+  rotate: false
+  xy: 1945, 1895
+  size: 100, 150
+  orig: 116, 150
+  offset: 7, 0
+  index: -1
+A02
+  rotate: false
+  xy: 1414, 1674
+  size: 96, 147
+  orig: 116, 149
+  offset: 8, 2
+  index: -1
+Body
+  rotate: false
+  xy: 2, 490
+  size: 351, 421
+  orig: 353, 423
+  offset: 1, 1
+  index: -1
+Foot_L_01
+  rotate: false
+  xy: 2, 19
+  size: 152, 143
+  orig: 154, 145
+  offset: 1, 1
+  index: -1
+Foot_L_02
+  rotate: false
+  xy: 1803, 1905
+  size: 140, 140
+  orig: 142, 142
+  offset: 1, 1
+  index: -1
+Foot_L_03
+  rotate: false
+  xy: 174, 230
+  size: 159, 258
+  orig: 161, 260
+  offset: 1, 1
+  index: -1
+Foot_L_04
+  rotate: false
+  xy: 455, 1020
+  size: 170, 324
+  orig: 172, 326
+  offset: 1, 1
+  index: -1
+Foot_R_01
+  rotate: false
+  xy: 1501, 1902
+  size: 152, 143
+  orig: 154, 145
+  offset: 1, 1
+  index: -1
+Foot_R_02
+  rotate: false
+  xy: 455, 878
+  size: 140, 140
+  orig: 142, 142
+  offset: 1, 1
+  index: -1
+Foot_R_03
+  rotate: false
+  xy: 1021, 1567
+  size: 159, 258
+  orig: 161, 260
+  offset: 1, 1
+  index: -1
+Foot_R_04
+  rotate: false
+  xy: 2, 164
+  size: 170, 324
+  orig: 172, 326
+  offset: 1, 1
+  index: -1
+HandNew01
+  rotate: false
+  xy: 1306, 1887
+  size: 193, 158
+  orig: 193, 158
+  offset: 0, 0
+  index: -1
+HandNew02
+  rotate: false
+  xy: 1306, 1887
+  size: 193, 158
+  orig: 193, 158
+  offset: 0, 0
+  index: -1
+Hand_L_01
+  rotate: false
+  xy: 444, 702
+  size: 116, 174
+  orig: 118, 176
+  offset: 1, 1
+  index: -1
+Hand_L_02
+  rotate: false
+  xy: 1182, 1560
+  size: 114, 265
+  orig: 114, 265
+  offset: 0, 0
+  index: -1
+Hand_L_03
+  rotate: false
+  xy: 1298, 1673
+  size: 114, 148
+  orig: 116, 150
+  offset: 1, 1
+  index: -1
+Hand_R_01
+  rotate: false
+  xy: 444, 526
+  size: 116, 174
+  orig: 118, 176
+  offset: 1, 1
+  index: -1
+Hand_R_02
+  rotate: false
+  xy: 781, 1302
+  size: 114, 265
+  orig: 114, 265
+  offset: 0, 0
+  index: -1
+Hand_R_03
+  rotate: false
+  xy: 1298, 1524
+  size: 114, 147
+  orig: 116, 149
+  offset: 1, 1
+  index: -1
+HeadA02
+  rotate: false
+  xy: 2, 913
+  size: 451, 431
+  orig: 451, 431
+  offset: 0, 0
+  index: -1
+HeadA1
+  rotate: false
+  xy: 2, 1346
+  size: 650, 699
+  orig: 650, 699
+  offset: 0, 0
+  index: -1
+Neck
+  rotate: false
+  xy: 174, 150
+  size: 123, 78
+  orig: 123, 78
+  offset: 0, 0
+  index: -1
+Patch
+  rotate: false
+  xy: 1306, 1823
+  size: 168, 62
+  orig: 170, 64
+  offset: 1, 1
+  index: -1
+ZhuFu
+  rotate: false
+  xy: 654, 1370
+  size: 125, 455
+  orig: 125, 505
+  offset: 0, 16
+  index: -1
+apple01
+  rotate: false
+  xy: 1655, 1903
+  size: 146, 142
+  orig: 150, 144
+  offset: 2, 2
+  index: -1
+chunlianBG
+  rotate: false
+  xy: 654, 1827
+  size: 650, 218
+  orig: 650, 218
+  offset: 0, 0
+  index: -1
+chunlianJuan
+  rotate: false
+  xy: 897, 1311
+  size: 37, 256
+  orig: 38, 256
+  offset: 1, 0
+  index: -1
+maobi
+  rotate: false
+  xy: 355, 545
+  size: 87, 366
+  orig: 87, 366
+  offset: 0, 0
+  index: -1
+smoke01
+  rotate: false
+  xy: 781, 1569
+  size: 238, 256
+  orig: 238, 256
+  offset: 0, 0
+  index: -1

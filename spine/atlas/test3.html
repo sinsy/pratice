@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <script src="rolebg/spine.js"></script>
+    <script src="rolebg/rolebg.js"></script>
+    <script src="rolebg/action.js"></script>
+</head>
+<body>
+    <img src="http://g.tbcdn.cn/tm/spokesman//0.0.4/img/head/18.jpg" alt="" style="display: none">
+    <canvas id="objCanvas" width="640" height="680"></canvas>
+    <script>
+    var BoneCanvas = (function() {
+        function init(arr){
+            Res.init(arr);
+            update();
+        }
+        function update(){
+            var list = Res.list;
+            var max = Res.list.length;
+            var n = 0;
+            var p;
+            for(var i in list){
+                p = list[i];
+                // console.log(p.status);
+                if('status' in p){
+                    n++;
+                }
+            }
+            r = n / max;
+
+            if (r < 1) {
+                setTimeout(update, 50);
+            }else{
+                // setTimeout(initCanvas, 1000)
+                initCanvas();
+            }             
+        }
+        function initCanvas(){
+            var canvas = document.getElementById('objCanvas');
+            var context = canvas.getContext("2d");
+            var actionArr = ['HappyNewYear', 'ApplePen'];
+            var requestAnimationFrame = window.requestAnimationFrame ||
+            window.webkitRequestAnimationFrame ||
+            window.mozRequestAnimationFrame ||            
+            function (callback) {
+                window.setTimeout(callback, 1000 / 60);
+            };
+            var roleData = [{name:'man2'
+                    ,infoName: 'people'
+                    ,action:actionArr[0]
+                    ,scale:.2
+                    ,active:true,
+                    x:300,
+                    y:500,
+                    part: {}
+                },{name:'man0'
+                    ,infoName: 'people'
+                    ,action:actionArr[0]
+                    ,scale:.2
+                    ,active:true,
+                    x:500,
+                    y:500,
+                    part: {}
+                },{name:'man2'
+                    ,infoName: 'banshan'
+                    ,action:'idle'
+                    ,scale:1
+                    ,active:true,
+                    x:100,
+                    y:500,
+                    part: {}
+                }]
+            for(var i in roleData){
+                var data = roleData[i];
+                for(var j in Res.list){
+                    var p = Res.list[j];
+                    if('role' in p){
+                        if(p.role == data.name){
+                            data.part[p.part]=j;
+                        }
+                    }
+                }
+                var _id = ZhSpine.make(data);
+                ZhSpine.list[_id];
+            }
+
+            renderFrame();
+    canvas.addEventListener('click', changeAnimation, false);
+    function changeAnimation(e){
+        var p = getEventPosition(e);
+        var index = draw(p, arr)[0];
+        console.log(index)
+        var count = 0;
+        for(var key in ZhSpine.list){
+            if(count == index){
+                ZhSpine.list[key].action = 'ApplePen';
+                ZhSpine.list[key].state.setAnimationByName(0, ZhSpine.list[key].action, true, 0);
+            }
+            count++;
+        }
+    }
+    function getEventPosition(ev){
+      var x, y;
+      if (ev.layerX || ev.layerX == 0) {
+        x = ev.layerX;
+        y = ev.layerY;
+      } else if (ev.offsetX || ev.offsetX == 0) { // Opera
+        x = ev.offsetX;
+        y = ev.offsetY;
+      }
+      return {x: x, y: y};
+    }
+    var arr = [];
+function draw(p,arr){
+  var who = [];
+  // context.clearRect(0, 0, canvas.width, canvas.height);
+  arr.forEach(function(v, i){
+    context.beginPath();
+    context.rect(v.x, v.y, v.width, v.height);
+    context.stroke();
+    if(p && context.isPointInPath(p.x, p.y)){
+      //如果传入了事件坐标，就用isPointInPath判断一下
+      //如果当前环境覆盖了该坐标，就将当前环境的index值放到数组里
+      who.push(i);
+    }
+  });
+  //根据数组中的index值，可以到arr数组中找到相应的元素。
+  return who;
+}
+
+        function renderFrame(){
+                context.clearRect(0, 0, canvas.width, canvas.height);
+                arr = [];
+                for(var i in ZhSpine.list){
+                    var _list = ZhSpine.list[i];
+                    _list.state.timeScale = 1;
+                    
+                    _list.update();
+                    _list.render(context, Res);
+                    var data = {
+                        width:_list.skeletonData.width*_list.scale,
+                        height:_list.skeletonData.height*_list.scale
+                    }
+                    data.x = _list.skeleton.x-data.width/2;
+                    data.y = _list.skeleton.y-data.height;
+                    arr.push(data)
+                }
+                draw(p,arr);
+                requestAnimationFrame(renderFrame);
+            }
+        }
+        return {
+            init: init
+        }
+
+    })();
+    
+    BoneCanvas.init([ {
+            "url": "1.png",
+            'role': 'man0',
+            part: 'face'
+        }, {
+            "url": "2.png",
+            'role': 'man2',
+            part: 'face'
+        },
+        {'url':'people.spine', "z":"100"},{'url':'banshan.spine'}]);
+    
+    </script>
+</body>
+</html>

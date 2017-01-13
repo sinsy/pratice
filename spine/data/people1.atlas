@@ -1,0 +1,167 @@
+
+people.png
+size: 1024,1024
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+A01
+  rotate: false
+  xy: 553, 70
+  size: 86, 128
+  orig: 99, 128
+  offset: 6, 0
+  index: -1
+A02
+  rotate: false
+  xy: 641, 83
+  size: 82, 126
+  orig: 99, 127
+  offset: 7, 1
+  index: -1
+Body
+  rotate: false
+  xy: 557, 661
+  size: 300, 360
+  orig: 300, 360
+  offset: 0, 0
+  index: -1
+Foot_L_01
+  rotate: false
+  xy: 859, 621
+  size: 130, 121
+  orig: 131, 123
+  offset: 1, 1
+  index: -1
+Foot_L_02
+  rotate: false
+  xy: 733, 163
+  size: 121, 121
+  orig: 121, 121
+  offset: 0, 0
+  index: -1
+Foot_L_03
+  rotate: false
+  xy: 557, 438
+  size: 137, 221
+  orig: 137, 221
+  offset: 0, 0
+  index: -1
+Foot_L_04
+  rotate: false
+  xy: 387, 148
+  size: 146, 277
+  orig: 146, 277
+  offset: 0, 0
+  index: -1
+Foot_R_01
+  rotate: false
+  xy: 835, 498
+  size: 130, 121
+  orig: 131, 123
+  offset: 0, 1
+  index: -1
+Foot_R_02
+  rotate: false
+  xy: 725, 40
+  size: 121, 121
+  orig: 121, 121
+  offset: 0, 0
+  index: -1
+Foot_R_03
+  rotate: false
+  xy: 696, 438
+  size: 137, 221
+  orig: 137, 221
+  offset: 0, 0
+  index: -1
+Foot_R_04
+  rotate: false
+  xy: 859, 744
+  size: 146, 277
+  orig: 146, 277
+  offset: 0, 0
+  index: -1
+HandNew01
+  rotate: false
+  xy: 387, 12
+  size: 164, 134
+  orig: 164, 134
+  offset: 0, 0
+  index: -1
+HandNew02
+  rotate: false
+  xy: 387, 12
+  size: 164, 134
+  orig: 164, 134
+  offset: 0, 0
+  index: -1
+Hand_L_01
+  rotate: false
+  xy: 733, 286
+  size: 100, 150
+  orig: 100, 150
+  offset: 0, 0
+  index: -1
+Hand_L_02
+  rotate: false
+  xy: 535, 200
+  size: 97, 225
+  orig: 97, 225
+  offset: 0, 0
+  index: -1
+Hand_L_03
+  rotate: false
+  xy: 856, 216
+  size: 99, 128
+  orig: 99, 128
+  offset: 0, 0
+  index: -1
+Hand_R_01
+  rotate: false
+  xy: 835, 346
+  size: 100, 150
+  orig: 100, 150
+  offset: 0, 0
+  index: -1
+Hand_R_02
+  rotate: false
+  xy: 634, 211
+  size: 97, 225
+  orig: 97, 225
+  offset: 0, 0
+  index: -1
+Hand_R_03
+  rotate: false
+  xy: 856, 87
+  size: 99, 127
+  orig: 99, 127
+  offset: 0, 0
+  index: -1
+HeadA02
+  rotate: false
+  xy: 2, 59
+  size: 383, 366
+  orig: 383, 366
+  offset: 0, 0
+  index: -1
+HeadA1
+  rotate: false
+  xy: 2, 427
+  size: 553, 594
+  orig: 553, 594
+  offset: 0, 0
+  index: -1
+Neck
+  rotate: false
+  xy: 553, 2
+  size: 105, 66
+  orig: 105, 66
+  offset: 0, 0
+  index: -1
+Patch
+  rotate: false
+  xy: 2, 3
+  size: 144, 54
+  orig: 145, 54
+  offset: 0, 0
+  index: -1

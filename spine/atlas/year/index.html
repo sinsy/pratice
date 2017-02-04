@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <script src="../rolebg/spine.js"></script>
+    <script src="bone.js"></script>
+</head>
+<body>
+    <canvas id="objCanvas" width="640" height="680"></canvas>
+    <script>
+    var imgArr = ['../1.png', '../2.png','../1.png'];
+   BoneCanvas.init([{
+            "url": imgArr[0],
+            'role': 'man0',
+            part: 'HeadA02'
+        }
+        , {
+            "url": imgArr[2],
+            'role': 'man2',
+            part: 'HeadA02'
+        },{
+            "url": imgArr[1],
+            'role': 'man1',
+            part: 'HeadA02'
+        },{
+            "url": imgArr[1],
+            'role': 'man1',
+            part: 'ZhuFu'
+        },
+        {'url':'people.spine'}]);
+    
+    </script>
+</body>
+</html>

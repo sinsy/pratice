@@ -1,3 +1,49 @@
+// (function() {
+//     var lastTime = 0;
+//     var vendors = ['ms', 'moz', 'webkit', 'o'];
+//     for (var x = 0; x < vendors.length && !window.requestAnimationFrame; ++x) {
+//         window.requestAnimationFrame = window[vendors[x] + 'RequestAnimationFrame'];
+//         window.cancelAnimationFrame = window[vendors[x] + 'CancelAnimationFrame'] || window[vendors[x] + 'CancelRequestAnimationFrame'];
+//     }
+//     if (!window.requestAnimationFrame) window.requestAnimationFrame = function(callback, element) {
+//         var currTime = new Date().getTime();
+//         var timeToCall = Math.max(0, 16 - (currTime - lastTime));
+//         var id = window.setTimeout(function() {
+//             callback(currTime + timeToCall);
+//         }, timeToCall);
+//         lastTime = currTime + timeToCall;
+//         return id;
+//     };
+//     if (!window.cancelAnimationFrame) window.cancelAnimationFrame = function(id) {
+//         clearTimeout(id);
+//     };
+// }());
+var viewSize = (function(){
+
+    var pageWidth = window.innerWidth,
+        pageHeight = window.innerHeight;
+
+    if (typeof pageWidth != 'number') {
+        if (document.compatMode == 'CSS1Compat') {
+            pageHeight = document.documentElement.clientHeight;
+            pageWidth = document.documentElement.clientWidth;
+        } else {
+            pageHeight = document.body.clientHeight;
+            pageWidth = document.body.clientWidth;
+        }
+    };
+    if(pageWidth >= pageHeight){
+        pageWidth = pageHeight * 360 / 640;
+    }
+    // pageWidth = pageWidth >  414 ? 414 : pageWidth;
+    // pageHeight = pageHeight > 736 ? 736 : pageHeight;
+
+    return {
+        width: pageWidth,
+        height: pageHeight
+    };
+
+})();
 function Ship(ctx){
 	gameMonitor.im.loadImage(['static/img/player.png', 'static/img/food1.png', 'static/img/food2.png']);
 	this.width = 80;
@@ -22,8 +68,8 @@ function Ship(ctx){
 		if(this.left<0){
 			this.left = 0;
 		}
-		if(this.left>ImageMonitor.width-this.width){
-			this.left = ImageMonitor.width-this.width;
+		if(this.left>gameMonitor.w-this.width){
+			this.left = gameMonitor.w-this.width;
 		}
 		if(this.top<0){
 			this.top = 0;
@@ -40,12 +86,14 @@ function Ship(ctx){
 			currentY = this.top,
 			move = false;
 		stage.on(gameMonitor.eventType.start, function(event){
+			if(gameMonitor.gameover)return;
 			_this.setPosition(event);
 			move = true;
 		}).on(gameMonitor.eventType.end, function(){
 			move = false;
 		}).on(gameMonitor.eventType.move, function(event){
 			event.preventDefault();
+			if(gameMonitor.gameover)return;
 			if(move){
 				_this.setPosition(event);	
 			}
@@ -135,10 +183,10 @@ function ImageMonitor() {
 	}
 }
 var gameMonitor = {
-	w : 320,
-	h : 568,
-	bgWidth : 320,
-	bgHeight : 1126,
+	w : viewSize.width,
+	h : viewSize.height,
+	bgWidth : viewSize.width,
+	bgHeight : viewSize.height*2,
 	time : 0,
 	timmer : null,
 	bgSpeed : 2,
@@ -146,6 +194,7 @@ var gameMonitor = {
 	bgDistance:0,//背景位置
 	score:0,
 	im : new ImageMonitor(),
+	gameover : false,
 	foodList : [],
 	eventType : {
 		start : 'touchstart',
@@ -155,8 +204,9 @@ var gameMonitor = {
 	init : function(){
 		var _this = this;
 		var canvas = document.getElementById('stage');
+		canvas.width = _this.w;
+		canvas.height = _this.h;
 		var ctx = canvas.getContext('2d');
-
 		//绘制背景
 		var bg = new Image();
 		_this.bg = bg;
@@ -175,7 +225,6 @@ var gameMonitor = {
 		});
 		body.on(gameMonitor.eventType.start, '#guidePanel', function(){
 			$(this).hide();
-
 			_this.ship = new Ship(ctx);
 			_this.ship.paint();
       		_this.ship.controll();
@@ -194,7 +243,6 @@ var gameMonitor = {
 		body.on(gameMonitor.eventType.start, '#frontpage', function(){
 			$('#frontpage').css('left', '-100%');
 		});
-
 
 		body.on(gameMonitor.eventType.start, '.share', function(){
 			$('.weixin-share').show().on(gameMonitor.eventType.start, function(){
@@ -230,17 +278,16 @@ var gameMonitor = {
 				f.move(ctx);
 			}
 		}
-		_this.timmer = setTimeout(function(){
-			gameMonitor.run(ctx);
-		}, Math.round(1000/60));
+		_this.timer = requestAnimationFrame(function(){gameMonitor.run(ctx)});
 		_this.time++;
+		if(_this.gameover){
+			cancelAnimationFrame(_this.timer);
+		}
 	},
 	stop : function(){
 		var _this = this;
+		this.gameover = true;
 		$('#stage').off(gameMonitor.eventType.start + ' ' +gameMonitor.eventType.move);
-		setTimeout(function(){
-			clearTimeout(_this.timmer);
-		}, 0);
 	},
 	genorateFood : function(){
 		var genRate = 50;//产生月饼的频率
@@ -259,6 +306,7 @@ var gameMonitor = {
 		this.score = 0;
 		this.timmer = null;
 		this.time = 0;
+		this.gameover = false;
 		$('#score').text(this.score);
 	},
 	getScore : function(){

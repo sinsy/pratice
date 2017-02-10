@@ -30,9 +30,9 @@ a{
 	bottom: 20px;
 }
 #gamepanel{
-	width: 320px;
+	width: 100%;
 	margin: 0 auto;
-	height: 568px;
+	height: 100%;
 	position: relative;
 	overflow: hidden;
 }
@@ -147,6 +147,7 @@ div.hearthot {
 
 #resultPanel{
 	background:url(../img/endpage.jpg) center top no-repeat;
+    background-size: 100% 100%;
 }
 
 #resultPanel,#resultPanel .weixin-share {

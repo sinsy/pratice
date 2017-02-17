@@ -55,8 +55,45 @@ function Bird() {
     this.index = 2;
     this.count = 0;
     this.step = 1;
+    var canX = Math.ceil(110 / 450 * GM.w);
+    this.canX = [canX, canX, canX];
+    var canY = Math.ceil(380 / 800 * GM.h);
+    this.canY = [canY, canY, canY];
+    var canW = Math.ceil(34 * GM.k);
+    this.canW = [canW, canW, canW];
+    var canH = Math.ceil(24 * GM.k);
+    this.canH = [canH, canH, canH];
+    this.t = 0;
+    this.y = [canY, canY, canY];
 
 }
+Bird.prototype.draw = function() {
+    var index = this.index;
+    //翅膀拍动
+    this.count++;
+    if(this.count == 6){
+        this.index += this.step;
+        this.count = 0;
+    }
+    if((this.index == 2 && this.step == 1) || this.index == 0 && this.step == -1){
+        this.step = - this.step;
+    }
+    //计算垂直位移，使用公式 y = a * t * (t - c)
+    var c = 0.7 * 60;
+    var minY = -85*GM.h/800;
+    var a = -minY*4/(c*c);
+    var dy = a*this.t * (this.t - c);
+    if(this.y[0] + dy < 0){
+        GM.canClick = false;
+    }else{
+        GM.canClick = true;
+    }
+    for(var i=0; i<3; i++){
+        this.canY[i] = this.y[i] + Math.ceil(dy);
+    }
+    this.t ++;
+    GM.ctx.drawImage(GM.img, this.imgX[index], this.imgY[index], this.imgW[index], this.imgH[index], this.canX[index], this.canY[index], this.canW[index], this.canH[index]);
+};
 function Pie(){}
 /**
  * 分数类
@@ -144,7 +181,6 @@ var GM = {
         body.on(GM.eventType.start, '#restart', function(){
             _this.init();
             _this.timer = requestAnimationFrame(GM.run);
-            console.log(_this)
         });
         _this.timer = requestAnimationFrame(_this.run);
     },
@@ -156,8 +192,9 @@ var GM = {
             _this.ctx.clearRect(0,0,_this.w,_this.h);
             _this.ctx.drawImage(_this.img, 0, 0, 800, 600, 0, 0, Math.ceil(_this.k * 800), viewSize.height);
             if(_this.isStarted){
-
+                _this.bird.draw();
             }else{
+                _this.bird.draw();
                 //画ready
                 _this.ctx.drawImage(_this.img, 170, 900, 300, 90, Math.ceil(viewSize.width * 0.5 - _this.k * 277 * 0.5), Math.ceil(200 / 800 * viewSize.height), 277 * _this.k, 75 * _this.k)
                 _this.ctx.drawImage(_this.img, 170, 1150, 230, 150, Math.ceil(viewSize.width * 0.5 - _this.k * 200 * 0.5), Math.ceil(400 / 800 * viewSize.height), 200 * _this.k, 150 * _this.k)

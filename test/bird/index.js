@@ -94,7 +94,54 @@ Bird.prototype.draw = function() {
     this.t ++;
     GM.ctx.drawImage(GM.img, this.imgX[index], this.imgY[index], this.imgW[index], this.imgH[index], this.canX[index], this.canY[index], this.canW[index], this.canH[index]);
 };
-function Pie(){}
+
+/**
+ * 水管基类
+ */
+function Pie(){
+    this.imgY = 751;
+    this.imgW = 52;
+    this.imgH = 420;
+    this.canX = viewSize.width;
+    this.canW = Math.ceil(80/450 * viewSize.width);
+    this.canH = Math.ceil(this.canW * 420/52);
+}
+/**
+ * 上水管类
+ */
+function UpPie(top){
+    Pie.call(this);
+    this.imgX = 70;
+    this.canY = top - this.canH;
+    this.draw = drawPie;
+}
+UpPie.prototype = new Pie();
+/**
+ * 下水管类
+ */
+function DownPie(top){
+    Pie.call(this);
+    this.imgX = 0;
+    this.canY = top + Math.ceil(150 / 800 * viewSize.height);
+    this.draw = drawPie;
+}
+DownPie.prototype = new Pie();
+function drawPie(){
+    var speed = 2*GM.k;
+    this.canX -= speed;
+    GM.ctx.drawImage(GM.img, this.imgX, this.imgY, this.imgW, this.imgH, this.canX, this.canY, this.canW, this.canH);
+}
+/**
+ * 创建水管
+ */
+function createPie(){
+    var minTop = Math.ceil(90 /800 * viewSize.height),
+        maxTop = Math.ceil(390 /800 * viewSize.height),
+        top = minTop + Math.ceil(Math.random() * (maxTop - minTop));
+    GM.pies.push(new UpPie(top));
+    GM.pies.push(new DownPie(top));
+};
+
 /**
  * 分数类
  */
@@ -147,19 +194,30 @@ var GM = {
         end : 'touchend'
     },
     img : new Image(),
+    startBtn :  document.getElementById('restart'),
     init : function(){
         var _this = this;
         _this.canvas = document.getElementById('canvas');
         _this.canvas.width = viewSize.width;
         _this.canvas.height = viewSize.height;
         _this.ctx = canvas.getContext('2d');
-        _this.ground = new Ground();
-        _this.bird = new Bird();
-        _this.score = new Score();
-
+        _this.initObj();
         _this.img.onload = _this.initListener();
         _this.img.src = './img.png';
 
+    },
+    initObj: function(){
+        var _this = this;
+        _this.canClick = true;
+        _this.gameover = false;
+        _this.canCount = true;
+        _this.isStarted = false;
+        _this.ground = new Ground();
+        _this.bird = new Bird();
+        _this.score = new Score();
+        _this.startBtn.style.display = 'none';
+        createPie();
+        
     },
     initListener : function(){
         var _this = this;
@@ -171,30 +229,61 @@ var GM = {
         $(document).on(GM.eventType.start, function(e){
             if(GM.gameover)return;
             if(GM.isStarted){
-                if(_this.canClick){
-
+                if(GM.canClick){
+                    for(var i = 0; i < 3; i++){
+                        GM.bird.y[i] = GM.bird.canY[i];
+                    }
+                    GM.bird.t = 0;
+                }else{
+                    return;
                 }
             }else{
                 GM.isStarted = true;
             }
         });
         body.on(GM.eventType.start, '#restart', function(){
-            _this.init();
-            _this.timer = requestAnimationFrame(GM.run);
+            GM.initObj();
+            GM.timer = requestAnimationFrame(GM.run);
         });
         _this.timer = requestAnimationFrame(_this.run);
     },
     run : function(){
         var _this = GM;
+        _this.check();
         if(_this.gameover){
+            console.log(1)
+            _this.ctx.drawImage(_this.img, 170, 990, 300, 90, Math.ceil(viewSize.width * 0.5 - _this.k * 277 * 0.5), Math.ceil(200 / 800 * viewSize.height), 277 * _this.k, 75 * _this.k)
+            _this.ctx.drawImage(_this.img, 550, 1005, 160, 90, Math.ceil(viewSize.width * 0.5 - _this.k * 160 * 0.5), Math.ceil(400 / 800 * viewSize.height), 160 * _this.k, 90 * _this.k)
+            _this.startBtn.style.width = 160 * _this.k + 'px';
+            _this.startBtn.style.height = 90 * _this.k + 'px';
+            _this.startBtn.style.left = Math.ceil(viewSize.width * 0.5 - _this.k * 160 * 0.5) + 'px';
+            _this.startBtn.style.top = Math.ceil(400 / 800 * viewSize.height) + 'px';
+            _this.startBtn.style.display = 'block';
 
+            cancelAnimationFrame(_this.timer);
+            _this.destroy();
         }else{
             _this.ctx.clearRect(0,0,_this.w,_this.h);
             _this.ctx.drawImage(_this.img, 0, 0, 800, 600, 0, 0, Math.ceil(_this.k * 800), viewSize.height);
             if(_this.isStarted){
+                //第一组水管出左边屏幕，移除水管
+                if(GM.pies[0].canX <= -GM.pies[0].canW && GM.pies.length == 4){
+                    GM.pies[0] = null;
+                    GM.pies[1] = null;
+                    GM.pies.shift();
+                    GM.pies.shift();
+                    GM.canCount = true;
+                }
+                //创建水管
+                if(GM.pies[0].canX <= 0.5 * (viewSize.width - GM.pies[0].canW) && GM.pies.length == 2){
+                    createPie();
+                }
+                //画水管
+                for(var i = 0, len = GM.pies.length; i < len; i++){
+                    GM.pies[i].draw();
+                }
                 _this.bird.draw();
             }else{
-                _this.bird.draw();
                 //画ready
                 _this.ctx.drawImage(_this.img, 170, 900, 300, 90, Math.ceil(viewSize.width * 0.5 - _this.k * 277 * 0.5), Math.ceil(200 / 800 * viewSize.height), 277 * _this.k, 75 * _this.k)
                 _this.ctx.drawImage(_this.img, 170, 1150, 230, 150, Math.ceil(viewSize.width * 0.5 - _this.k * 200 * 0.5), Math.ceil(400 / 800 * viewSize.height), 200 * _this.k, 150 * _this.k)
@@ -207,7 +296,57 @@ var GM = {
             _this.timer = requestAnimationFrame(_this.run);
         }
     },
-    check: function(){},
+    check: function(){
+        var bird = GM.bird;
+        var ground = GM.ground;
+        function isOverLay(rect1, rect2){
+            var flag = false;
+            if(rect1.top > rect2.bottom || rect1.bottom < rect2.top || rect1.right < rect2.left || rect1.left > rect2.right) flag = true;
+            return !flag;
+        }
+        //地板碰撞
+        if(bird.canY[0] + bird.canH[0] >= ground.canY){
+            console.log(viewSize)
+            console.log(bird.canY[0],bird.canH[0],ground.canY)
+            GM.gameover = true;
+            return;
+        }
+        //水管碰撞
+        var birdRect = {
+            top: bird.canY[0],
+            bottom: bird.canY[0] + bird.canH[0],
+            left: bird.canX[0],
+            right: bird.canX[0] + bird.canW[0]
+        };
+        for(var i = 0, len = GM.pies.length; i < len; i++){
+            var t = GM.pies[i];
+            var pieRect = {
+                top: t.canY,
+                bottom: t.canY + t.canH,
+                left: t.canX,
+                right: t.canX + t.canW
+            };
+            if(isOverLay(birdRect,pieRect)){
+                GM.gameover = true;
+                return;
+            }
+        }
+        //是否得分
+        if(Math.floor(bird.canX[0]) > Math.floor(GM.pies[0].canX + GM.pies[0].canW) && GM.canCount){
+            GM.canCount = false;
+            GM.score.score++;
+        };
+    },
+    destroy: function (){
+        var _this = this;
+        _this.ground = null;
+        _this.bird = null;
+        _this.score = null;
+        for(var i = 0, len = _this.pies.length; i < len; i++){
+            _this.pies[i] = null;
+        }
+        _this.pies = [];
+    },
     isMobile : function(){
         var sUserAgent= navigator.userAgent.toLowerCase(),
         bIsIpad= sUserAgent.match(/ipad/i) == "ipad",

@@ -1,0 +1,194 @@
+<!doctype html>
+
+
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=1024" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <title>impress.js | presentation tool based on the power of CSS3 transforms and transitions in modern browsers | by Bartek Szopka @bartaz</title>
+    
+    <meta name="description" content="impress.js is a presentation tool based on the power of CSS3 transforms and transitions in modern browsers and inspired by the idea behind prezi.com." />
+    <meta name="author" content="Bartek Szopka" />
+
+    <link href="http://fonts.googleapis.com/css?family=Open+Sans:regular,semibold,italic,italicsemibold|PT+Sans:400,700,400italic,700italic|PT+Serif:400,700,400italic,700italic" rel="stylesheet" />
+    <link href="css/impress-demo.css" rel="stylesheet" />
+    
+    <link rel="shortcut icon" href="favicon.png" />
+    <link rel="apple-touch-icon" href="apple-touch-icon.png" />
+    <style>
+        #impress p{font-size: 40px;margin: 20px;line-height: 1.2;}
+        #impress .fs-small{font-size: 28px;margin: 20px;}
+        #impress .fs-22{font-size: 22px;margin: 15px;}
+    </style>
+</head>
+
+<body class="impress-not-supported">
+
+<!--
+    For example this fallback message is only visible when there is `impress-not-supported` class on body.
+-->
+<div class="fallback-message">
+    <p>Your browser <b>doesn't support the features required</b> by impress.js, so you are presented with a simplified version of this presentation.</p>
+    <p>For the best experience please use the latest <b>Chrome</b>, <b>Safari</b> or <b>Firefox</b> browser.</p>
+</div>
+
+<div id="impress">
+    <div id="bored" class="step slide" data-x="-2000" data-y="-1500">
+        <q>1.小程序是什么</q>
+        <img width="500" src="images/5.png" alt="">
+        <p class="fs-small">微信：人--人</p>
+        <p class="fs-small">订阅号：人--信息</p>
+        <p class="fs-small">服务号：人--服务</p>       
+        <p class="fs-small">小程序：人--服务</p>
+    </div>    
+    <div class="step slide" data-x="-1000" data-y="-1500">
+        <q>1-1.它为什么重要</q>
+        <p class="fs-small">1)点赞、转发、关注和扫码俨然成为了我们的“日常工作”。</p>
+        <p class="fs-small">2)小程序起码能够有效地弥补微信服务号的不足</p>
+        <p class="fs-22" style="margin-left: 50px;">*因为会话消息而改变存放位置，不能便捷地找到并打开一个服务号</br>
+        *存在加载慢，操作不流畅等体验不佳的问题</br>
+        *当我们正在访问公众号的某个网页时，无法切换到其他会话并且切换回来
+        </p>
+        <p class="fs-small">3)小程序是微信生态扩容的重要工具</p>
+        <p class="fs-22" style="margin-left: 50px;">*让更多的传统行业通过互联网转型升级并加入到腾讯的生态系统中来
+        </p>        
+        <p class="fs-small">4)能够帮助腾讯更好地建设好线上线下有机互动的商业闭环</p>
+        <p class="fs-22" style="margin-left: 50px;">*通过廉价的二维码能够以较低的成本连接线下
+        </p>
+    </div>
+    <div class="step slide" data-x="0" data-y="-1500">
+        <q>2.小程序的样子与入口</q>
+        <p class="fs-small">入口：扫码、搜索、分享到群和对话、公众号和小程序绑定</p>
+        <img src="images/1.png" alt="">
+    </div>
+
+    <div class="step slide" data-x="1000" data-y="-1500">
+        <q>3.小程序近来的动态</q>
+<!--         <p class="fs-small">1)个人开发者可申请小程序</p>
+        <p class="fs-small">2)公众号自定义菜单点击可打开相关小程序</p>
+        <p class="fs-small">3)公众号模版消息可打开相关小程序</p>
+        <p class="fs-small">4)公众号关联小程序时，可选择给粉丝下发通知</p>
+        <p class="fs-small">5)移动 App 可分享小程序页面</p> -->
+        <img width="800" src="images/2.jpeg" alt="">
+    </div>    
+    <div class="step slide" data-x="2000" data-y="-1500">
+        <q>4.12个代表性小程序</q>
+        <p class="fs-22">一开始小程序的定位是连接未被发掘的线下场景，现在则是继续发掘线下场景的同时也鼓励线上剩余场景的开发。</p>
+        <img width="700" src="images/3.jpeg" alt="">
+    </div>     
+    <div class="step slide" data-x="3000" data-y="-1500">
+        <q>5.谁需要开发小程序</q>
+        <img src="images/4.png" alt="">
+    </div>     
+    <div class="step slide" data-x="4000" data-y="-1500">
+        <q>5-1.留住低频用户</q>
+        <img src="images/6.png" alt="">
+    </div>      
+    <div class="step slide" data-x="5000" data-y="-1500">
+        <q>5-2.线下相关</q>
+        <img src="images/7.png" alt="">
+    </div>     
+    <div class="step slide" data-x="6000" data-y="-1500">
+        <q>5-3.群有关</q>
+        <img src="images/8.png" alt="">
+    </div>     
+    <div class="step slide" data-x="7000" data-y="-1500">
+        <q>6.小程序的开发场景</q>
+        <p>可能适合做什么？</p>
+        <p>-面向低频用户</p>
+        <p>-时常使用的工具</p>
+        <p>-社群类</p>
+        <p>-电商类</p>
+        <p>-例子，订汽车票、查看公交位置、买电影票、查看一篇教程、日程管理类、排队取号类、餐馆点餐、自选股等等</p>
+    </div>      
+    <div class="step slide" data-x="8000" data-y="-1500">
+        <q>7.小程序的局限？</q>
+        <p>商家希望消费者不要用完即走，下次再来；
+        <p>企业不希望用户用完即走；</p>
+        <p>小程序又希望用完即走；</p>
+    </div>    
+    <div class="step slide" data-x="9000" data-y="-1500">
+        <q>大家一起吐槽吧~</q>
+        <p>1.小程序没机会，还是你没有想象力？</p>
+        <p>2.对于小程序的“用完即走”，你有什么看法？</p>
+        <p>3.为何微信要推出小程序这一个产品？</p>
+        <p>4.如果说微信想借小程序，把微信打造成操作系统，你觉得能实现吗？</p>
+    </div>
+
+    <div id="title" class="step" data-x="0" data-y="0" data-scale="4">
+        <span class="try">再聊</span>
+        <h1>小程序<sup>*</sup></h1>
+        <span class="footnote"><sup>*</sup> 分享者：刘加宝</span>
+    </div>
+
+    <!--
+        
+        This element introduces rotation.
+        
+        Notation shouldn't be a surprise. We use `data-rotate="90"` attribute, meaning that this
+        element should be rotated by 90 degrees clockwise.
+        
+    -->
+    <div id="its" class="step" data-x="850" data-y="3000" data-rotate="90" data-scale="5">
+        <p>小程序上线几个月 ，<br/>没用过小程序的举个手
+<!--         inspired by the idea behind <a href="http://prezi.com">prezi.com</a> <br/>
+        and based on the <strong>power of CSS3 transforms and transitions</strong> in modern browsers. -->
+        </p>
+    </div>
+
+    <div id="big" class="step" data-x="3500" data-y="2100" data-rotate="180" data-scale="6">
+        <p>用过什么小程序？</p>
+    </div>
+
+    <!--
+        
+        And now it gets really exciting! We move into third dimension!
+        
+        Along with `data-x` and `data-y`, you can define the position on third (Z) axis, with
+        `data-z`. In the example below we use `data-z="-3000"` meaning that element should be
+        positioned far away from us (by 3000px).
+        
+    -->
+    <div id="tiny" class="step" data-x="2825" data-y="2325" data-z="-3000" data-rotate="300" data-scale="1">
+        <p>你觉得它好用吗？方便吗？</p>
+    </div>
+
+<!--     <div id="ing" class="step" data-x="3500" data-y="-850" data-rotate="270" data-scale="6">
+        <p>by <b class="positioning">positioning</b>, <b class="rotating">rotating</b> and <b class="scaling">scaling</b> them on an infinite canvas</p>
+    </div>
+
+    <div id="imagination" class="step" data-x="6700" data-y="-300" data-scale="6">
+        <p>the only <b>limit</b> is your <b class="imagination">imagination</b></p>
+    </div>
+
+    <div id="source" class="step" data-x="6300" data-y="2000" data-rotate="20" data-scale="4">
+        <p>want to know more?</p>
+        <q><a href="http://github.com/bartaz/impress.js">use the source</a>, Luke!</q>
+    </div> -->
+
+    <div id="one-more-thing" class="step" data-x="6000" data-y="4000" data-scale="2">
+        <p>begin...</p>
+    </div>
+
+    <div id="overview" class="step" data-x="3000" data-y="1500" data-scale="10">
+    </div>
+
+</div>
+<!-- <div class="hint">
+    <p>Use a spacebar or arrow keys to navigate</p>
+</div> -->
+<script>
+if ("ontouchstart" in document.documentElement) { 
+    // document.querySelector(".hint").innerHTML = "<p>Tap on the left or right to navigate</p>";
+}
+</script>
+
+<script src="js/impress.js"></script>
+<script>impress().init();</script>
+
+
+</body>
+</html>
+
+

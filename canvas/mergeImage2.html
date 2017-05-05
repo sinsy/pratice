@@ -3,6 +3,7 @@
 <head>
 	<title>合成图片</title>
 	<meta name="viewport" content="width=device-width" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
 	<meta charset="utf-8">
 	<style>
 		*{margin: 0;}
@@ -50,227 +51,268 @@
 			</div>		
 		</div>
 	</div>
+
+	<button id="file">上传图片</button></br>
 	<button id="mergeBtn">合成图片</button></br>
 	旋转图片<input type="range" min="-180" max="180" id="rotateControl" oninput="rotateImage(this.value);"></br>
 	缩放<input class="flex-2" type="range" id="scaleControl" min="0.1" max="2.0" step="0.05" oninput="scaleImage(this.value, this.value);">
 	<div id="show"></div>
-	<script src="../hammer/js/hammer.js"></script>
+	<script src="js/hammer.js"></script>
+	<script src="js/photoclip.js"></script>
 	<!-- <script src="http://demo.jackyang.me/image-editor/public/scripts/hammer.min.js"></script> -->
 	<script>
-	    document.body.addEventListener('touchmove', function(evt) {
-          if(!evt._isScroller) {
-            evt.preventDefault();
-          }
-        });
-		var moveHammer = null;
-		var output = {
-			width: 500,
-			height: 700
-		}
-	    var $frame = document.querySelector('#frame');
-	    var images = [];
-	    var imagesUrl = [{
-	    	url:'../images/word.png',
-	    	pos:{
-	    		x:5,
-	    		y:5
+	var test = new PhotoClip({
+		container: '#frame',//容器div  -----必填
+		file: '#file',//点击按钮 -----必填
+		ok: '#mergeBtn',//完成按钮  -----必填
+		output: { //图片输出尺寸
+			width: 400,
+	    	height: 400
+		},
+		size : { //容器尺寸
+	    	width: 200,
+	    	height: 200
+	    },
+		imagesArr:[{//可填
+	    	url:'images/word.png',//图片链接------必填
+	    	// pos:{x:0,y:0},//图片位置-------可填：{x:0,y:0}
+	    	zIndex: 1, //图片图层 -------可填：0
+	    	widthRatio: .8
+	    	// widthRatio: 1, //宽度比例0-1 -------可填：默认1	 
+	    	// select: false //true为可移动， false为不可移动 -----可填：默认false
+	    }],
+	    textArr:[{
+	    	text: '我来了 0123455',
+	    	pos: {
+		    	x:10,
+		    	y:100
 	    	},
-	    	zIndex: 1,
-	    	width: '95',
-	    },{
-	    	url:'../images/1.jpg',
-	    	pos:{
-	    		x:0,
-	    		y:0
-	    	},
-	    	zIndex: 0,
-	    	width:'100',
-	    	select: true
-	    }];
-	    imagesUrl.forEach(function(obj){
-	    	addImage(obj);
-	    });
+	    	fc: '#333333'
+	    }],
+	    loadStart : function(){
+	    	console.log('开始读取图片');
+	    },
+	    loadComplete : function(){
+	    	console.log('完成读取图片');
+	    },
+	    done : function(){},
+	    fail : function(){}
+	});
 
-	    var direction = 0;
-	    var activeImage = null;
-		window.onload = function() {
-			document.querySelector('#frame').addEventListener('touchmove', function(evt) {
-	          if(!evt._isScroller) {
-	            evt.preventDefault();
-	          }
-	        });
-			DragImage();
+	 //    document.body.addEventListener('touchmove', function(evt) {
+  //         if(!evt._isScroller) {
+  //           evt.preventDefault();
+  //         }
+  //       });
+		// var moveHammer = null;
+		// var output = {
+		// 	width: 500,
+		// 	height: 700
+		// }
+	 //    var $frame = document.querySelector('#frame');
+	 //    var images = [];
+	 //    var imagesUrl = [{
+	 //    	url:'images/word.png',
+	 //    	pos:{
+	 //    		x:5,
+	 //    		y:5
+	 //    	},
+	 //    	zIndex: 1,
+	 //    	width: '95',
+	 //    },{
+	 //    	url:'images/1.jpg',
+	 //    	pos:{
+	 //    		x:0,
+	 //    		y:0
+	 //    	},
+	 //    	zIndex: 0,
+	 //    	width:'100',
+	 //    	select: true
+	 //    }];
+	 //    imagesUrl.forEach(function(obj){
+	 //    	addImage(obj);
+	 //    });
 
-			document.querySelector('#mergeBtn').onclick = function(){
-			    var canvas = document.createElement('canvas');
-			    canvas.width = output.width;//CSS中定义了画布是580
-			    canvas.height = output.height;
-			    var ctx = canvas.getContext('2d');
-			    ctx.fillStyle = '#FFF';//绘制背景色
-			    ctx.fillRect(0,0,canvas.width,canvas.height);
+	 //    var direction = 0;
+	 //    var activeImage = null;
+		// window.onload = function() {
+		// 	document.querySelector('#frame').addEventListener('touchmove', function(evt) {
+	 //          if(!evt._isScroller) {
+	 //            evt.preventDefault();
+	 //          }
+	 //        });
+		// 	DragImage();
 
-			    images.forEach(function(obj){
-			    	drawImage(obj,ctx);
-			    });
+		// 	document.querySelector('#mergeBtn').onclick = function(){
+		// 	    var canvas = document.createElement('canvas');
+		// 	    canvas.width = output.width;//CSS中定义了画布是580
+		// 	    canvas.height = output.height;
+		// 	    var ctx = canvas.getContext('2d');
+		// 	    ctx.fillStyle = '#FFF';//绘制背景色
+		// 	    ctx.fillRect(0,0,canvas.width,canvas.height);
+
+		// 	    images.forEach(function(obj){
+		// 	    	drawImage(obj,ctx);
+		// 	    });
 			    
-			    var base64 = canvas.toDataURL('image/jpeg');
-			    //合成的图片
-			    document.querySelector('#show').innerHTML = '<img src="'+base64+'">'
-			}
-			function drawImage(image,ctx){
-				var transform = image.transform;
-				var params = {
-					w: output.width/image.containerWidth,
-					h: output.height/image.containerHeight
-				}
-				ctx.save();
-				ctx.translate(image.centerPoint.x, image.centerPoint.y);
-				ctx.rotate(Math.PI * image.transform.rotation/180)
-				ctx.translate(-image.centerPoint.x, -image.centerPoint.y);
-				ctx.scale(transform.scale, transform.scale);
-				//根据canvas的大小进行等比放大  
-				//参数获取公式 ：Wpic/Wframe = Wout/Wcanvas ----提取params.w = Wcanvas/Wframe
-				ctx.drawImage(image.img,
-		            (image.centerPoint.x - image.width * transform.scale / 2) / transform.scale*params.w,
-		            (image.centerPoint.y - image.height * transform.scale / 2) / transform.scale*params.h,
-		            image.width*params.w,
-		            image.height*params.h
-		        );
-				ctx.restore();
-			}
-		}
-		function scaleImage(scale){
-			activeImage.transform.scale = scale;
-			updateElementTransform(activeImage);
-		}
+		// 	    var base64 = canvas.toDataURL('image/jpeg');
+		// 	    //合成的图片
+		// 	    document.querySelector('#show').innerHTML = '<img src="'+base64+'">'
+		// 	}
+		// 	function drawImage(image,ctx){
+		// 		var transform = image.transform;
+		// 		var params = {
+		// 			w: output.width/image.containerWidth,
+		// 			h: output.height/image.containerHeight
+		// 		}
+		// 		ctx.save();
+		// 		ctx.translate(image.centerPoint.x, image.centerPoint.y);
+		// 		ctx.rotate(Math.PI * image.transform.rotation/180)
+		// 		ctx.translate(-image.centerPoint.x, -image.centerPoint.y);
+		// 		ctx.scale(transform.scale, transform.scale);
+		// 		//根据canvas的大小进行等比放大  
+		// 		//参数获取公式 ：Wpic/Wframe = Wout/Wcanvas ----提取params.w = Wcanvas/Wframe
+		// 		ctx.drawImage(image.img,
+		//             (image.centerPoint.x - image.width * transform.scale / 2) / transform.scale*params.w,
+		//             (image.centerPoint.y - image.height * transform.scale / 2) / transform.scale*params.h,
+		//             image.width*params.w,
+		//             image.height*params.h
+		//         );
+		// 		ctx.restore();
+		// 	}
+		// }
+		// function scaleImage(scale){
+		// 	activeImage.transform.scale = scale;
+		// 	updateElementTransform(activeImage);
+		// }
 
-		function addImage(obj){
-			var url = obj.url;
-			var x = obj.pos.x;
-			var y = obj.pos.y;
-			var zIndex = obj.zIndex; 
-			var img = new Image();
-			img.src = url;
-			img.onload = function(){
-				var a = x?x:0;
-				var b = y?y:0;
-				var image = {
-					img: img,
-					natural:{
-						width: img.naturalWidth,
-						height: img.naturalHeight
-					},
-					transform: {
-		                translate: {x: a, y: b},
-		                rotation: 0,
-		                scale: 1
-	                },
-	                containerWidth: $frame.offsetWidth,
-	                containerHeight: $frame.offsetHeight,
-	                width: $frame.offsetWidth*parseInt(obj.width)/100,
-	                height: $frame.offsetWidth*parseInt(obj.width)*img.height/img.width/100
-				}
-				img.style.zIndex = zIndex;
-				img.width = image.width;
-				img.height = image.height;
-				image.centerPoint = {
-					x: img.width/2+a,//图片中心点的位置X
-					y: img.height/2+b//图片中心点的位置Y 
-				}
-				updateElementTransform(image);
-				$frame.appendChild(img);
-				if(obj.select){
-					activeImage = image;
-					images.unshift(image);
-				}else{
-			    	images.push(image);
-				}
-			}
-		}
-		var initScale = 1;
-		var initAngle = 0;
-		var rotation, rotateDirection;
-		var startPan = {x:0, y:0}
-		var startCenterPoint = {x:0, y:0}
-		function DragImage(){
+		// function addImage(obj){
+		// 	var url = obj.url;
+		// 	var x = obj.pos.x;
+		// 	var y = obj.pos.y;
+		// 	var zIndex = obj.zIndex; 
+		// 	var img = new Image();
+		// 	img.src = url;
+		// 	img.onload = function(){
+		// 		var a = x?x:0;
+		// 		var b = y?y:0;
+		// 		var image = {
+		// 			img: img,
+		// 			natural:{
+		// 				width: img.naturalWidth,
+		// 				height: img.naturalHeight
+		// 			},
+		// 			transform: {
+		//                 translate: {x: a, y: b},
+		//                 rotation: 0,
+		//                 scale: 1
+	 //                },
+	 //                containerWidth: $frame.offsetWidth,
+	 //                containerHeight: $frame.offsetHeight,
+	 //                width: $frame.offsetWidth*parseInt(obj.width)/100,
+	 //                height: $frame.offsetWidth*parseInt(obj.width)*img.height/img.width/100
+		// 		}
+		// 		img.style.zIndex = zIndex;
+		// 		img.width = image.width;
+		// 		img.height = image.height;
+		// 		image.centerPoint = {
+		// 			x: img.width/2+a,//图片中心点的位置X
+		// 			y: img.height/2+b//图片中心点的位置Y 
+		// 		}
+		// 		updateElementTransform(image);
+		// 		$frame.appendChild(img);
+		// 		if(obj.select){
+		// 			activeImage = image;
+		// 			images.unshift(image);
+		// 		}else{
+		// 	    	images.push(image);
+		// 		}
+		// 	}
+		// }
+		// var initScale = 1;
+		// var initAngle = 0;
+		// var rotation, rotateDirection;
+		// var startPan = {x:0, y:0}
+		// var startCenterPoint = {x:0, y:0}
+		// function DragImage(){
 
-			var mc = new Hammer.Manager($frame);
-			mc.add(new Hammer.Pan({ threshold: 0, pointers: 0 }));
-	        mc.add(new Hammer.Rotate({ threshold: 0 })).set({ enable: true }).recognizeWith(mc.get('pan'));
-			mc.add(new Hammer.Pinch({ threshold: 0 })).set({ enable: true }).recognizeWith([mc.get('pan'), mc.get('rotate')]);
-			mc.on("panstart panmove panend", onPan.bind(this));
-			mc.on("rotatestart rotatemove", onRotate.bind(this));
-			mc.on("pinchstart pinchmove", onPinch.bind(this));
-		}
-		function onPan(e){
-	        if(e.type == 'panstart') {
-	          startPan = {
-	            x: activeImage.transform.translate.x,
-	            y: activeImage.transform.translate.y
-	          };
+		// 	var mc = new Hammer.Manager($frame);
+		// 	mc.add(new Hammer.Pan({ threshold: 0, pointers: 0 }));
+	 //        mc.add(new Hammer.Rotate({ threshold: 0 })).set({ enable: true }).recognizeWith(mc.get('pan'));
+		// 	mc.add(new Hammer.Pinch({ threshold: 0 })).set({ enable: true }).recognizeWith([mc.get('pan'), mc.get('rotate')]);
+		// 	mc.on("panstart panmove panend", onPan.bind(this));
+		// 	mc.on("rotatestart rotatemove", onRotate.bind(this));
+		// 	mc.on("pinchstart pinchmove", onPinch.bind(this));
+		// }
+		// function onPan(e){
+	 //        if(e.type == 'panstart') {
+	 //          startPan = {
+	 //            x: activeImage.transform.translate.x,
+	 //            y: activeImage.transform.translate.y
+	 //          };
 
-	          startCenterPoint = {
-	            x: activeImage.centerPoint.x,
-	            y: activeImage.centerPoint.y
-	          };
-	        }
-	        activeImage.transform.translate = {
-	          x: startPan.x + e.deltaX,
-	          y: startPan.y + e.deltaY
-	        };
+	 //          startCenterPoint = {
+	 //            x: activeImage.centerPoint.x,
+	 //            y: activeImage.centerPoint.y
+	 //          };
+	 //        }
+	 //        activeImage.transform.translate = {
+	 //          x: startPan.x + e.deltaX,
+	 //          y: startPan.y + e.deltaY
+	 //        };
 
-	        activeImage.centerPoint = {
-	          x: startCenterPoint.x + e.deltaX,
-	          y: startCenterPoint.y + e.deltaY
-	        };
+	 //        activeImage.centerPoint = {
+	 //          x: startCenterPoint.x + e.deltaX,
+	 //          y: startCenterPoint.y + e.deltaY
+	 //        };
 
 	        
-			updateElementTransform(activeImage);
-			e.preventDefault(); //取消事件的默认动画
-		}
-		var startRotation = 0;
-		function rotateImage(deg) {
-	        activeImage.transform.rotation = startRotation + deg * 1;
-	        updateElementTransform(activeImage);
-        }
-		function onRotate(e){
-			if(e.type == 'rotatestart'){
-	          startRotation = activeImage.transform.rotation;
-			}
+		// 	updateElementTransform(activeImage);
+		// 	e.preventDefault(); //取消事件的默认动画
+		// }
+		// var startRotation = 0;
+		// function rotateImage(deg) {
+	 //        activeImage.transform.rotation = startRotation + deg * 1;
+	 //        updateElementTransform(activeImage);
+  //       }
+		// function onRotate(e){
+		// 	if(e.type == 'rotatestart'){
+	 //          startRotation = activeImage.transform.rotation;
+		// 	}
 
-	        activeImage.transform.rotation = startRotation + e.rotation;
+	 //        activeImage.transform.rotation = startRotation + e.rotation;
 
-	        updateElementTransform(activeImage);
-			e.preventDefault();
-		}
-		function onPinch(e){
-			if(e.type == 'pinchstart') {
-		        initScale = activeImage.transform.scale || 1;
-		    }
+	 //        updateElementTransform(activeImage);
+		// 	e.preventDefault();
+		// }
+		// function onPinch(e){
+		// 	if(e.type == 'pinchstart') {
+		//         initScale = activeImage.transform.scale || 1;
+		//     }
 
-		    scale = initScale * e.scale;
-	        if(scale < 0.2)
-	          activeImage.transform.scale = 0.2;
-	        else if(scale > 5)
-	          activeImage.transform.scale = 5;
-	        else
-		        activeImage.transform.scale = scale;
-			updateElementTransform(activeImage);
-			e.preventDefault();
-		}
-		function updateElementTransform(el) {
-			var transform = el.transform;
-		    var value = [
-		        'translate3d(' + transform.translate.x + 'px, ' + transform.translate.y + 'px, 0)',
-		        'scale(' + transform.scale + ', ' + transform.scale + ')',
-		        'rotate('+ transform.rotation + 'deg)'
-		    ];
+		//     scale = initScale * e.scale;
+	 //        if(scale < 0.2)
+	 //          activeImage.transform.scale = 0.2;
+	 //        else if(scale > 5)
+	 //          activeImage.transform.scale = 5;
+	 //        else
+		//         activeImage.transform.scale = scale;
+		// 	updateElementTransform(activeImage);
+		// 	e.preventDefault();
+		// }
+		// function updateElementTransform(el) {
+		// 	var transform = el.transform;
+		//     var value = [
+		//         'translate3d(' + transform.translate.x + 'px, ' + transform.translate.y + 'px, 0)',
+		//         'scale(' + transform.scale + ', ' + transform.scale + ')',
+		//         'rotate('+ transform.rotation + 'deg)'
+		//     ];
 
-		    value = value.join(" ");
-		    el.img.style.webkitTransform = value;
-		    el.img.style.mozTransform = value;
-		    el.img.style.transform = value;
-		}
+		//     value = value.join(" ");
+		//     el.img.style.webkitTransform = value;
+		//     el.img.style.mozTransform = value;
+		//     el.img.style.transform = value;
+		// }
 	</script>
 </body>
 </html>

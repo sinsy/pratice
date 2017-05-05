@@ -11,13 +11,13 @@
 			display: inline-block;
 			border: 1px solid black;
 		}
-		.frame{
-		    width: 300px;
-		    height: 350px;
+		.clipArea{
+/*		    width: 300px;
+		    height: 350px;*/
 			position: relative;
 			overflow: hidden;
 		}
-		.frame img{
+		.clipArea img{
 			position: absolute;
 			top: 0;
 			left: 0;
@@ -44,8 +44,8 @@
 </head>
 <body>
 	<div class="center">
-		<div class="frameOuter">
-			<div class="frame" id="frame">
+		<div class="frameOuter" id="frameOuter">
+			<div class="clipArea" id="frame">
 				<!-- <img id="cover" src="../images/word.png" alt="" style="transform: translate3d(5px, 5px, 0);"> -->
 				<!-- <img id="pic" src="../images/1.jpg" alt="" style="transform: translate3d(0px, 0px, 0);"> -->
 			</div>		
@@ -62,7 +62,7 @@
 	<!-- <script src="http://demo.jackyang.me/image-editor/public/scripts/hammer.min.js"></script> -->
 	<script>
 	var test = new PhotoClip({
-		container: '#frame',//容器div  -----必填
+		container: '#frameOuter',//容器div  -----必填
 		file: '#file',//点击按钮 -----必填
 		ok: '#mergeBtn',//完成按钮  -----必填
 		output: { //图片输出尺寸
@@ -74,7 +74,7 @@
 	    	height: 200
 	    },
 		imagesArr:[{//可填
-	    	url:'images/word.png',//图片链接------必填
+	    	url:'http://static.playwx.com/hd/static/weitoupiao3.0/Postervote/images/blue.png',//图片链接------必填
 	    	// pos:{x:0,y:0},//图片位置-------可填：{x:0,y:0}
 	    	zIndex: 1, //图片图层 -------可填：0
 	    	widthRatio: .8
@@ -95,7 +95,9 @@
 	    loadComplete : function(){
 	    	console.log('完成读取图片');
 	    },
-	    done : function(){},
+	    done : function(data){
+	    	document.querySelector('#show').innerHTML = '<img src='+data+'>'
+	    },
 	    fail : function(){}
 	});
 

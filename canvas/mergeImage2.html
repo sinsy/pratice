@@ -36,10 +36,10 @@
 			left: 0;
 			width: 100%;
 		}
-		#show, .center{
-			text-align: center;
+		#show{
+			text-align: center;/*background: #000;*/
 		}
-		#show img{border: 1px solid black;}
+		#show img{border:1px solid black;max-width: 300px;}
 	</style>
 </head>
 <body>
@@ -52,8 +52,9 @@
 		</div>
 	</div>
 
-	<button id="file">上传图片</button></br>
-	<button id="mergeBtn">合成图片</button></br>
+	<button id="btnPhoto">上传图片</button></br>
+	<button id="clipBtn">合成图片</button></br>
+	<button id="rotatBtn">旋转图片</button></br>
 	旋转图片<input type="range" min="-180" max="180" id="rotateControl" oninput="rotateImage(this.value);"></br>
 	缩放<input class="flex-2" type="range" id="scaleControl" min="0.1" max="2.0" step="0.05" oninput="scaleImage(this.value, this.value);">
 	<div id="show"></div>
@@ -61,13 +62,13 @@
 	<script src="js/photoclip.js"></script>
 	<!-- <script src="http://demo.jackyang.me/image-editor/public/scripts/hammer.min.js"></script> -->
 	<script>
-	var test = new PhotoClip({
+	var photoClip = new PhotoClip({
 		container: '#frameOuter',//容器div  -----必填
 		file: '#file',//点击按钮 -----必填
 		ok: '#mergeBtn',//完成按钮  -----必填
 		output: { //图片输出尺寸
-			width: 400,
-	    	height: 400
+			width: 600,
+	    	height: 600
 		},
 		size : { //容器尺寸
 	    	width: 200,
@@ -100,6 +101,15 @@
 	    },
 	    fail : function(){}
 	});
+	document.querySelector('#btnPhoto').onclick = function(){
+        photoClip.fileBtnEvent();
+    };	
+    document.querySelector('#clipBtn').onclick = function(){
+        photoClip.okBtnEvent();
+    };    
+    document.querySelector('#rotatBtn').onclick = function(){
+        photoClip.rotateBtnEvent();
+    };
 
 	 //    document.body.addEventListener('touchmove', function(evt) {
   //         if(!evt._isScroller) {

@@ -1,8 +1,6 @@
 /**
 opt {
     container: '#container',//容器div  -----必填
-    file: '#file',//点击按钮 -----必填
-    ok: '#ok',//完成按钮  -----必填
     output: { //图片输出尺寸
         width: 200,
         height: 200
@@ -13,7 +11,7 @@ opt {
     },
     imagesArr:[{//选填
         url:'',//图片链接------必填
-        pos:{x:false,y:false},//图片位置-------选填：{x:0,y:0}
+        pos:{x:0,y:0},//图片位置-------选填：默认值：{x:true,y:true}默认居中true
         zIndex: 0, //图片图层 -------选填：0
         widthRatio: false, //宽度比例0-1 -------不可填：默认false, 不开启该功能,图片根据容器自动调整宽高  
         select: false //true为可移动， false为不可移动 -----选填：默认false
@@ -21,14 +19,14 @@ opt {
     textArr: [ //选填
     {
         text: '', //必填
-        pos:{x:0,y:0},//文字位置-------选填：{x:0,y:0} 默认居中
+        pos:{x:0,y:0},//文字位置-------选填：{x:0,y:0} 
         fs: '14px',//文字大小-------选填
         fc: '#333333',//文字颜色-------选填
         fw: 'nomal',
         zIndex:100
     }
     ],
-    outputType:'jpeg',//jpeg或png-------选填
+    outputType:'png',//jpeg或png-------选填
     loadStart : function(){},
     loadComplete : function(){},
     done : function(){},
@@ -42,7 +40,7 @@ var PhotoClip = function(opt){
     this.touchend = 'touchend';
     this.imagesOpt = {
         url:'',//图片链接------必填
-        pos:{x:false,y:false},//图片位置-------选填：{x:0,y:0}
+        pos:{x:true,y:true},//图片位置-------选填：{x:0,y:0}
         zIndex: 0, //图片图层 -------选填：0,不要超过100
         widthRatio: false, //宽度比例0-1 -------选填：默认1   
         select: false //true为可移动， false为不可移动 -----选填：默认false
@@ -61,7 +59,6 @@ var PhotoClip = function(opt){
     this.canvas = document.createElement('canvas');
     /*opt中的属性*/
     this.$container;//容器div  -----必填
-    this.$file; //点击按钮 -----必填
     this.$ok; //完成按钮  -----必填
     this.output = { //输出图片宽高
         width: 200,
@@ -73,7 +70,7 @@ var PhotoClip = function(opt){
     }
     this.imagesArr = [];  //存放初始化的图片
     this.textArr = [];
-    this.outputType = 'jpeg';
+    this.outputType = 'png';
     this.loadStart = function(){};
     this.loadComplete = function(){};
     this.done = function(){};
@@ -87,11 +84,6 @@ PhotoClip.prototype.init = function(opt) {
     var _this = this;
     _this.touchInit();
     _this.$container = document.querySelector(opt.container+' .clipArea');
-    _this.$layerTop = document.querySelector(opt.container+' .layerTop');
-    _this.$layerTop = document.querySelector(opt.container+' .layerBottom');    
-    _this.$file = document.querySelector(opt.file);
-    _this.$file.setAttribute('flag', false);
-    _this.$ok = document.querySelector(opt.ok);
     _this.output = opt.output ? opt.output:_this.output;
     _this.size = opt.size ? opt.size:_this.size;
     _this.loadStart = opt.loadStart ? opt.loadStart:_this.loadStart;
@@ -100,84 +92,71 @@ PhotoClip.prototype.init = function(opt) {
     _this.fail = opt.fail ? opt.fail:_this.fail;
     _this.outputType = opt.outputType ? 'image/'+opt.outputType:'image/'+_this.outputType;
 
-    //初始化蒙版
-    _this.initBtnEvent();
 };
-/**
-按钮事件初始化
-*/
-PhotoClip.prototype.initBtnEvent = function() {
-    /**
-    初始化事件
-    */
+/*图片上传按钮事件*/
+PhotoClip.prototype.fileBtnEvent = function() {
     var _this = this;
-    _this.$ok.addEventListener(_this.touchstart, function(e){
-        e.preventDefault();
-        var base64 = _this.mergeImage();
-        _this.done(base64);
-    });
-    _this.$file.addEventListener(_this.touchstart, function(e){
-        e.preventDefault();
-        alert(_this.$file.getAttribute('flag'))
-        if(!_this.$file.getAttribute('flag')){
-            return;
+    _this.restore();
+    //测试代码
+    // _this.loadStart(); 
+    // _this.imagesArr.push({
+    //     url:'http://static.playwx.com/hd/static/weitoupiao3.0/Postervote/images/renqi.png',
+    //     zIndex: 0, //图片图层 -------选填：0
+    //     select: true //true为可移动， false为不可移动 -----选填：默认false
+    // });
+    // _this.uploadSuccess();
+    
+    wx.chooseImage({
+        count: 1,
+        success : function(res) {
+            _this.loadStart();
+            upload(res.localIds);
         }
-        _this.$file.setAttribute('flag', false);
-        _this.restore();
-        //测试代码
-        _this.loadStart(); 
-        _this.imagesArr.push({
-            url:'http://static.playwx.com/hd/static/weitoupiao3.0/Postervote/images/pic.png',
-            zIndex: 0, //图片图层 -------选填：0
-            pos: {x:0, y:0},
-            select: true //true为可移动， false为不可移动 -----选填：默认false
-        });
-        _this.uploadSuccess();
-        /*
-        wx.chooseImage({
-            // count: 1,
+    });
+    function upload(localIds){
+        wx.uploadImage({
+            localId : localIds[0],
+            isShowProgressTips: 1, // 默认为1，显示进度提示
             success : function(res) {
-                // images.localIds = res.localIds;
-                // _this.loadStart(); 
-                upload(res.localIds);
+                // 上传成功
+                var serverId = res.serverId; // 返回图片的服务器端ID
+                uploadMedia(serverId,function(data){
+                    if(data.errcode == 0){//上传成功
+                        var base64 = data.base64;
+                        var strbase = "data:image/png;base64,"+base64;
+                        _this.imagesArr.push({
+                            url:strbase,//图片链接------必填
+                            zIndex: 0, //图片图层 -------选填：0
+                            select: true //true为可移动， false为不可移动 -----选填：默认false
+                        });
+                        _this.uploadSuccess();
+                    }else{
+                        alert(data.errmsg);
+                    }
+                });
+            },
+            fail : function(res) {
+                alert(JSON.stringify(res));
             }
         });
-        function upload(localIds){
-            alert('我来了'+localIds)
-            wx.uploadImage({
-                localId : localIds[0],
-                isShowProgressTips: 1, // 默认为1，显示进度提示
-                success : function(res) {
-                    // 上传成功
-                    var serverId = res.serverId; // 返回图片的服务器端ID
-                    uploadMedia(serverId,function(data){
-                        alert('上传图片成功'+data)
-                        if(data.errcode == 0){//上传成功
-                            var base64 = data.base64;
-                            var strbase = "data:image/png;base64,"+base64;
-                            alert(strbase)
-                            _this.imagesArr.push({
-                                url:strbase,//图片链接------必填
-                                pos:{x:0,y:0},//图片位置-------选填：{x:0,y:0}
-                                zIndex: 0, //图片图层 -------选填：0
-                                widthRatio: 1, //宽度比例0-1 -------选填：默认1   
-                                select: true //true为可移动， false为不可移动 -----选填：默认false
-                            });
-                            alert(data)
-                            _this.uploadSuccess();
-                        }else{
-                            alert(data.errmsg);
-                        }
-                    });
-                },
-                fail : function(res) {
-                    alert(JSON.stringify(res));
-                }
-            });
-        }*/
-    });
+    }    
 };
 
+PhotoClip.prototype.okBtnEvent = function() {
+    var _this = this;
+    var base64 = _this.mergeImage();
+    _this.done(base64);
+};
+
+PhotoClip.prototype.rotateBtnEvent = function() {
+    // console('djfdk')
+    var _this = this;
+    var activeImage = _this.activeImage;
+    var deg = activeImage.transform.rotation + 90;
+    console.log(deg)
+    activeImage.transform.rotation += 90;
+    _this.updateElementTransform(activeImage);
+};
 
 PhotoClip.prototype.restore = function() {
     var _this = this;
@@ -201,7 +180,6 @@ PhotoClip.prototype.uploadSuccess = function() {
     _this.$container.style.width = _this.size.width+'px';
     _this.$container.style.height = _this.size.height+'px';
     _this.$container.innerHTML = '<div class="clipbg" style="width:'+_this.$container.style.width +';height:'+_this.$container.style.height+';"></div>';
-    alert(_this.imagesArr)
     for(var i in _this.imagesArr){
         for(var key in _this.imagesOpt){
             _this.imagesArr[i][key] = _this.imagesArr[i][key] ? _this.imagesArr[i][key]:_this.imagesOpt[key];
@@ -226,7 +204,6 @@ PhotoClip.prototype.uploadSuccess = function() {
     
     //循环资源是否加载成功
     _this.imagesIsAllLoad(function(){
-        alert('cheng')
         _this.textArr.forEach(function(obj){
             _this.addText(obj);
         });
@@ -272,7 +249,9 @@ PhotoClip.prototype.addImage = function(obj) {
     var y = obj.pos.y;
     var zIndex = obj.zIndex; 
     var img = new Image();
-    img.crossOrigin = "Anonymous";
+    if(url.indexOf('data:image/')<0){
+        img.crossOrigin = "Anonymous";
+    }
     img.src = url;
     img.onload = function(){
 
@@ -302,8 +281,8 @@ PhotoClip.prototype.addImage = function(obj) {
             image.width = _this.$container.offsetWidth*obj.widthRatio;
             image.height = _this.$container.offsetWidth*obj.widthRatio*img.height/img.width;
         }
-        var a = x?x:(image.width-_this.$container.offsetWidth)/2*-1;
-        var b = y?y:(image.height-_this.$container.offsetHeight)/2*-1;
+        var a = x==true?(image.width-_this.$container.offsetWidth)/2*-1:x;
+        var b = y==true?(image.height-_this.$container.offsetHeight)/2*-1:y;
         image.transform.translate = {
             x:a,
             y:b
@@ -324,7 +303,6 @@ PhotoClip.prototype.addImage = function(obj) {
         }else{
             _this.images.push(image);
         }
-        console.log('success')
     }
     img.onerror = function() {
         var image = {
@@ -359,11 +337,12 @@ PhotoClip.prototype.hammerEvent = function(first_argument) {
     var _this = this;
     var mc = new Hammer.Manager(_this.$container);
     mc.add(new Hammer.Pan({ threshold: 0, pointers: 0 }));
-    mc.add(new Hammer.Rotate({ threshold: 0 })).set({ enable: true }).recognizeWith(mc.get('pan'));
-    mc.add(new Hammer.Pinch({ threshold: 0 })).set({ enable: true }).recognizeWith([mc.get('pan'), mc.get('rotate')]);
+    // mc.add(new Hammer.Rotate({ threshold: 0 })).set({ enable: true }).recognizeWith(mc.get('pan'));
+    // mc.add(new Hammer.Pinch({ threshold: 0 })).set({ enable: true }).recognizeWith([mc.get('pan'), mc.get('rotate')]);
+    mc.add(new Hammer.Pinch({ threshold: 0 })).set({ enable: true }).recognizeWith([mc.get('pan')]);
     mc.on("panstart panmove panend", _this.onPan.bind(_this));
-    mc.on("rotatestart rotatemove", _this.onRotate.bind(this));
-    mc.on("pinchstart pinchmove", _this.onPinch.bind(_this));
+    // mc.on("rotatestart rotatemove", _this.onRotate.bind(this));
+    mc.on("pinchstart pinchmove pinchend", _this.onPinch.bind(_this));
 };
 
 PhotoClip.prototype.onRotate = function(e) {
@@ -374,7 +353,6 @@ PhotoClip.prototype.onRotate = function(e) {
       _this.startRotation = activeImage.transform.rotation;
     }
     activeImage.transform.rotation = _this.startRotation + e.rotation;
-    // activeImage.transform.rotation +=  90;
     _this.updateElementTransform(activeImage);
 
 };
@@ -382,15 +360,11 @@ PhotoClip.prototype.onPan = function(e) {
     e.preventDefault(); //取消事件的默认动画
     var _this = this;
     var activeImage = _this.activeImage;
+    var scale = activeImage.transform.scale;
     if(e.type == 'panstart') {
       startPan = {
         x: activeImage.transform.translate.x,
         y: activeImage.transform.translate.y
-      };
-
-      startCenterPoint = {
-        x: activeImage.centerPoint.x,
-        y: activeImage.centerPoint.y
       };
     }
     activeImage.transform.translate = {
@@ -398,35 +372,37 @@ PhotoClip.prototype.onPan = function(e) {
       y: startPan.y + e.deltaY
     };
     activeImage.centerPoint = {
-      x: startCenterPoint.x + e.deltaX,
-      y: startCenterPoint.y + e.deltaY
+      x: activeImage.transform.translate.x+activeImage.width/2,
+      y: activeImage.transform.translate.y+activeImage.height/2
     };
-    var x = startPan.x + e.deltaX;
-    var y = startPan.y + e.deltaY;
-    if(e.type == 'panend'){
-        if(x<0){
-            if(x+activeImage.width < activeImage.containerWidth){
-                console.log(x)
-                x = (activeImage.width-activeImage.containerWidth)*-1;
-            }
-        }else if(x>0){
-            x=0;
-        }else{}
+    // var x = startPan.x + e.deltaX;
+    // var y = startPan.y + e.deltaY;
+    // if(e.type == 'panend'){
+    //     if(x<0){
+    //         if(x+activeImage.width < activeImage.containerWidth){
+    //             x = (activeImage.width-activeImage.containerWidth)*-1;
+    //         }
+    //     }else if(x>0){
+    //         x=0;
+    //     }else{}
 
-        if(y<0){
-            if(y+activeImage.containerHeight < activeImage.containerHeight){
-                y = (activeImage.height-activeImage.containerHeight)*-1;
-            }
-        }else if(y>0){
-            y=0;
-        }else{}
-        console.log(x+'   '+y)
-        activeImage.transform.translate = {
-          x: x,
-          y: y
-        };
-        // console.log(startPan.x + e.deltaX)
-    }
+    //     if(y<0){
+    //         if(y+activeImage.height < activeImage.containerHeight){
+    //             y = (activeImage.height-activeImage.containerHeight)*-1;
+    //         }
+    //     }else if(y>0){
+    //         y=0;
+    //     }else{}
+    //     activeImage.transform.translate = {
+    //       x: x,
+    //       y: y
+    //     };
+    //     activeImage.centerPoint = {
+    //       x: activeImage.transform.translate.x+activeImage.width/2,
+    //       y: activeImage.transform.translate.y+activeImage.height/2
+    //     };
+    //     // console.log(startPan.x + e.deltaX)
+    // }
 
     _this.updateElementTransform(activeImage);
 };
@@ -437,7 +413,6 @@ PhotoClip.prototype.onPinch = function(e) {
     if(e.type == 'pinchstart') {
         initScale = activeImage.transform.scale || 1;
     }
-
     scale = initScale * e.scale;
     if(scale < 0.2)
       activeImage.transform.scale = 0.2;
@@ -467,10 +442,14 @@ PhotoClip.prototype.updateElementTransform = function(el) {
 PhotoClip.prototype.mergeImage = function() {
     var _this = this;
     var canvas = _this.canvas;
-    canvas.width = _this.output.width;//CSS中定义了画布是580
-    canvas.height = _this.output.height;
+    canvas.width = _this.$container.offsetWidth;//CSS中定义了画布是580
+    canvas.height = _this.$container.offsetHeight;
     var ctx = canvas.getContext('2d');
-    ctx.fillStyle = '#FFF';//绘制背景色
+    if(_this.outputType.indexOf('png')>-1){
+        ctx.fillStyle = 'transparent';//绘制背景色
+    }else{
+        ctx.fillStyle = '#fff';
+    }
     ctx.fillRect(0,0,canvas.width,canvas.height);
 
     _this.images.forEach(function(obj){
@@ -479,47 +458,72 @@ PhotoClip.prototype.mergeImage = function() {
     _this.textArr.forEach(function(obj){
         _this.drawText(obj, ctx);
     });
-    try{
-        var base64 = canvas.toDataURL('image/png');
-        // var base64 = '';
-    }catch(err){
-txt="There was an error on this page.\n\n";
-  txt+="Error description: " + JSON.stringify(err.message) + "\n\n";
-  txt+="Click OK to continue.\n\n";
-  alert(txt);
+
+    var base64 = canvas.toDataURL(_this.outputType);
+    var sc = scaleCanvas(canvas, _this.output.width, _this.output.height);
+    return sc.toDataURL(_this.outputType);
+        //缩放canvas:控制导出的图片的大小
+    function scaleCanvas (canvas, width, height) {
+        var w = canvas.width,
+            h = canvas.height;
+        if (width == undefined) {
+            width = w;
+        }
+        if (height == undefined) {
+            height = h;
+        }
+
+        var retCanvas = document.createElement('canvas');
+        var retCtx = retCanvas.getContext('2d');
+        retCanvas.width = width;
+        retCanvas.height = height;
+        retCtx.drawImage(canvas, 0, 0, w, h, 0, 0, width, height);
+        return retCanvas;
     }
-    return base64;
-    //合成的图片
-    // document.querySelector('#show').innerHTML = '<img src="'+base64+'">'
+
+};
+PhotoClip.prototype.scaleCanvas = function() {
+    var canvas = _this.canvas;
+    console.log(canvas)
+    var width = output.width;
+    var height = output.height;
+    var w = canvas.width,
+        h = canvas.height;
+    if (width == undefined) {
+        width = w;
+    }
+    if (height == undefined) {
+        height = h;
+    }
+
+    var retCanvas = document.createElement('canvas');
+    var retCtx = retCanvas.getContext('2d');
+    retCanvas.width = width;
+    retCanvas.height = height;
+    retCtx.drawImage(canvas, 0, 0, w, h, 0, 0, width, height);
+    return retCanvas;
 };
 PhotoClip.prototype.drawText = function(obj, ctx) {
     var _this = this;
-    var params = {
-        w: _this.output.width/_this.$container.offsetWidth,
-        h: _this.output.height/_this.$container.offsetHeight
-    }
     ctx.save();
     ctx.textBaseline="top"; 
     var fontArr = obj.font.split(' ');
     var fontSize = 0;
     for(var i in fontArr){
         if(fontArr[i].indexOf('px')>-1){
-            fontSize = params.w * parseFloat(fontArr[i].split('px')[0]);
+            fontSize = parseFloat(fontArr[i].split('px')[0]);
             fontArr[i] = fontSize+'px';
         }
     }
     ctx.font= fontArr.join(' ');
     ctx.fillStyle=obj.fc;
-    ctx.fillText(obj.text,obj.pos.x*params.w, obj.pos.y*params.h);
-    console.log(obj.pos.y+fontSize)
+    ctx.fillText(obj.text,obj.pos.x, obj.pos.y);
+    // console.log(obj.pos.y+fontSize)
 };
 PhotoClip.prototype.drawImage = function(image,ctx) {
     var _this = this;
     var transform = image.transform;
-    var params = {
-        w: _this.output.width/image.containerWidth,
-        h: _this.output.height/image.containerHeight
-    }
+
     ctx.save();
     ctx.translate(image.centerPoint.x, image.centerPoint.y);
     ctx.rotate(Math.PI * image.transform.rotation/180)
@@ -528,10 +532,10 @@ PhotoClip.prototype.drawImage = function(image,ctx) {
     //根据canvas的大小进行等比放大  
     //参数获取公式 ：Wpic/Wframe = Wout/Wcanvas ----提取params.w = Wcanvas/Wframe
     ctx.drawImage(image.img,
-        (image.centerPoint.x - image.width * transform.scale / 2) / transform.scale*params.w,
-        (image.centerPoint.y - image.height * transform.scale / 2) / transform.scale*params.h,
-        image.width*params.w,
-        image.height*params.h
+        (image.centerPoint.x - image.width * transform.scale / 2) / transform.scale,
+        (image.centerPoint.y - image.height * transform.scale / 2) / transform.scale,
+        image.width,
+        image.height
     );
     ctx.restore();
 };
